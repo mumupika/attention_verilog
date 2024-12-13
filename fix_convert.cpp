@@ -2,13 +2,15 @@
 #include<vector>
 #include<cmath>
 #include<cstdint>
+#define LL long long
 using namespace std;
 
 /**
  * @brief 在这里将整数转换成为八位整数+八位小数。
- * @param a:浮点数。
+ * @param a:浮点数
+ * @return byte_container,16bits.
  */
-vector<int> __float2byte_16(double &a)
+vector<int> __float2byte_16(double a)
 {
     int integer = floor(a);
     double fraction = a - integer;
@@ -37,8 +39,9 @@ vector<int> __float2byte_16(double &a)
 /**
  * @brief 在这里将整数转换成为16位整数+16位小数。
  * @param a:浮点数。
+ * @return byte_container,32bits.
  */
-vector<int> __float2byte_32(double &a)
+vector<int> __float2byte_32(double a)
 {
     int integer = floor(a);
     double fraction = a - integer;
@@ -67,8 +70,9 @@ vector<int> __float2byte_32(double &a)
 /**
  * @brief 在这里将整数转换成为18位整数+16位小数。
  * @param a:浮点数。
+ * @return byte_container, 34bits
  */
-vector<int> __float2byte_34(double &a)
+vector<int> __float2byte_34(double a)
 {
     int integer = floor(a);
     double fraction = a - integer;
@@ -97,6 +101,7 @@ vector<int> __float2byte_34(double &a)
 /**
  * @brief 将16位byteContainer转换成浮点数。
  * @param a:bytecontainer.
+ * @return 转换成的浮点数。
  */
 double __byte2float_16(vector<int> &a)
 {
@@ -121,6 +126,7 @@ double __byte2float_16(vector<int> &a)
 /**
  * @brief 将32位byteContainer转换成浮点数。
  * @param a:bytecontainer.
+ * @return 转换成的浮点数。
  */
 double __byte2float_32(vector<int> &a)
 {
@@ -145,6 +151,7 @@ double __byte2float_32(vector<int> &a)
 /**
  * @brief 将34位byteContainer转换成浮点数。
  * @param a:bytecontainer.
+ * @return 转换成的浮点数。
  */
 double __byte2float_34(vector<int> &a)
 {
@@ -170,6 +177,7 @@ double __byte2float_34(vector<int> &a)
  * @brief 对外使用接口。
  * @param a: 需要进行转换的浮点数。
  * @param length: 需要的长度。
+ * @return 一定长度的byte_container, 16/32/34bits.
  */
 vector<int> float2byte(double a, int length)
 {
@@ -179,7 +187,7 @@ vector<int> float2byte(double a, int length)
         case 32: return __float2byte_32(a);
         case 34: return __float2byte_34(a);
         default: 
-            std::cerr << "No fixed length provided!" << std::endl;
+            std::cerr << "No fixed length provided!\n";
             exit(-1);
     }
 }
@@ -187,8 +195,9 @@ vector<int> float2byte(double a, int length)
 /**
  * @brief 对外使用转换接口。通过长度大小自动识别长度。
  * @param a: 需要进行转换的byteContainer.
+ * @return 转换成的浮点数。
  */
-double byte2float(vector<int> &a)
+double byte2float(vector<int> a)
 {
     switch(a.size())
     {
@@ -196,7 +205,7 @@ double byte2float(vector<int> &a)
         case 32: return __byte2float_32(a);
         case 34: return __byte2float_34(a);
         default: 
-            std::cerr << "No fixed length container provided!" << std::endl;
+            std::cerr << "No fixed length container provided!\n";
             exit(-1);
     }
 }
