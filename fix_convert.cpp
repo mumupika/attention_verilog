@@ -209,3 +209,29 @@ double byte2float(vector<int> a)
             exit(-1);
     }
 }
+
+/**
+ * @brief 将矩阵转换成固定的浮点数。
+ * @param a: (ref), 直接进行原地修改。
+ * @param length: byteContainer长度。
+ */
+void vector2fix(vector<vector<double> > &a, int length)
+{
+    try
+    {
+        if(!a.size() || !a[0].size())
+            throw "Error! vector is empty.\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    for(size_t i = 0; i < a.size(); i++)
+    {
+        for (size_t j = 0; j < a[0].size(); j++)
+        {
+            a[i][j] = byte2float(float2byte(a[i][j], length));
+        }
+    }
+}
