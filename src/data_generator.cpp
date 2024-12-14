@@ -15,7 +15,7 @@ vector<vector<double> > random_query(double low, double high)
     std::default_random_engine engine(1234);
     std::uniform_real_distribution<double> generator(low, high);
 
-    vector<vector<double> > query(8,vector<double>(4,0));
+    vector<vector<double> > query(4,vector<double>(8,0));
     for (size_t i = 0; i < query.size(); i++)
     {
         for(size_t j = 0; j < query[i].size(); j++)
@@ -35,7 +35,7 @@ vector<vector<double> > random_key(double low, double high)
     std::default_random_engine engine(2345);
     std::uniform_real_distribution<double> generator(low, high);
 
-    vector<vector<double> > key(4,vector<double>(8,0));
+    vector<vector<double> > key(8,vector<double>(4,0));
     for (size_t i = 0; i < key.size(); i++)
     {
         for(size_t j = 0; j < key[i].size(); j++)
@@ -55,7 +55,7 @@ vector<vector<double> > random_value(double low, double high)
     std::default_random_engine engine(3456);
     std::uniform_real_distribution<double> generator(low, high);
 
-    vector<vector<double> > value(8,vector<double>(4,0));
+    vector<vector<double> > value(4,vector<double>(8,0));
     for (size_t i = 0; i < value.size(); i++)
     {
         for(size_t j = 0; j < value[i].size(); j++)

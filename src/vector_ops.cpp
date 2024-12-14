@@ -58,7 +58,7 @@ vector<int> vec_mul(vector<int> &a, vector<int> &b)
  * @param a
  * @param b a,b 为向量。
  * @param length 需要返回的向量长度要求
- * @return 統一返回長度為34bits的向量。
+ * @return 統一返回长度规定的向量。
  */
 vector<int> vec_add(vector<int> &a, vector<int> &b, int length)
 {
@@ -97,6 +97,11 @@ vector<int> vec_add(vector<int> &a, vector<int> &b, int length)
         carry = value >> 1;
         ans_ind--;
     }
-    if(ans_ind != 0) ans[ans_ind] += carry;
+    for(; ans_ind >= 0; ans_ind--)
+    {
+        int value = ans[ans_ind] + carry;
+        carry = value >> 1;
+        ans[ans_ind] = value & 1;
+    }
     return ans;
 }
