@@ -41,4 +41,8 @@ vector<vector<double> > softmax(vector<vector<double> > &a);
 // #include "vector_ops.cpp"
 vector<int> vec_mul(vector<int> &a, vector<int> &b);
 vector<int> vec_add(vector<int> &a, vector<int> &b, int length);
+
+// #include "quantify.cpp"
+vector<int> vec_truncate(vector<int> &a);
+vector<int> vec_round(vector<int> &a);
 #endif

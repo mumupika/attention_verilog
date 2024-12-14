@@ -4,7 +4,8 @@ SRC = ./src
 CFLAGS = -std=c++17 -Wall -g
 
 all: main
-main: $(OBJ)/matrix_multiply.o $(OBJ)/data_generator.o $(OBJ)/softmax.o $(OBJ)/matrix_output.o $(OBJ)/fix_convert.o $(OBJ)/vector_ops.o $(OBJ)/test.o
+main: $(OBJ)/matrix_multiply.o $(OBJ)/data_generator.o $(OBJ)/softmax.o $(OBJ)/quantify.o \
+      $(OBJ)/matrix_output.o $(OBJ)/fix_convert.o $(OBJ)/vector_ops.o $(OBJ)/test.o
 	$(CC) $(CFLAGS) $^ -o main
 
 $(OBJ)/fix_convert.o: $(SRC)/fix_convert.cpp
@@ -32,6 +33,10 @@ $(OBJ)/softmax.o: $(SRC)/softmax.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ)/data_generator.o: $(SRC)/data_generator.cpp
+	@mkdir -p $(OBJ)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/quantify.o: $(SRC)/quantify.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
