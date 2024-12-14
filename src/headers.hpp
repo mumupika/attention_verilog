@@ -1,7 +1,6 @@
 #ifndef HEADERS_H_
 #define HEADERS_H_
 using namespace std;
-#include "vector_ops.hpp"
 
 // #include "data_generator.cpp"
 vector<vector<double> > random_query(double low, double high);
@@ -38,4 +37,8 @@ ostream & operator << (ostream& os, vector<int> &v);
 
 // #include "softmax.cpp"
 vector<vector<double> > softmax(vector<vector<double> > &a);
+
+// #include "vector_ops.cpp"
+vector<int> vec_mul(vector<int> &a, vector<int> &b);
+vector<int> vec_add(vector<int> &a, vector<int> &b, int length);
 #endif
