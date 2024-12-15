@@ -6,7 +6,7 @@ SO = -shared
 
 all: main # clean
 
-main: $(OBJ)/test.o $(OBJ)/data_generator.o $(OBJ)/matrix_lib.so $(OBJ)/operations.so
+main: $(OBJ)/test.o $(OBJ)/verilog_input.o $(OBJ)/data_generator.o $(OBJ)/matrix_lib.so $(OBJ)/operations.so
 	$(CC) $(CFLAGS) $^ -o main
 
 $(OBJ)/operations.so: $(OBJ)/quantify.o $(OBJ)/softmax.o $(OBJ)/fix_convert.o
@@ -50,6 +50,9 @@ $(OBJ)/quantify.o: $(SRC)/quantify.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(OBJ)/verilog_input.o: $(SRC)/verilog_input.cpp
+	@mkdir -p $(OBJ)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean
 clean: 

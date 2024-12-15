@@ -50,4 +50,9 @@ vector<int> vec_round(vector<int> &a);
 vector<int> vec_sat(vector<int> &a);
 vector<int> vec_wrap(vector<int> &a);
 vector<vector<double> > quantify_matrix(vector<vector<double > > &a, int strategy, int fix_point);
+
+// #include "verilog_input.cpp"
+string vec2hex(vector<int> &a);
+void input(vector<vector<double> > &a, string name);
+void output(vector<vector<double> > &a, string name);
 #endif
