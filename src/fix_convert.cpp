@@ -130,6 +130,37 @@ vector<int> __float2byte_34(double a)
 }
 
 /**
+ * @brief 在这里将整数转换成为18位整数+16位小数。
+ * @param a:浮点数。
+ * @return byte_container, 34bits
+ */
+vector<int> __float2byte_35(double a)
+{
+    int integer = floor(a);
+    double fraction = a - integer;
+    // pad integer.
+    vector<int> byte_container(35,0);
+    for(int i = 18; i >= 0; i--)
+    {
+        byte_container[i] = integer & 1;
+        integer >>= 1;
+    }
+    // pad fraction.
+    for(int i = 19; i <= 34; i++)
+    {
+        fraction *= 2;
+        if(fraction >= 1)
+        {
+            fraction -= 1;
+            byte_container[i] = 1;
+        }
+        else
+            byte_container[i] = 0;
+    }
+    return byte_container;
+}
+
+/**
  * @brief 在这里将整数转换成为三十二位位整数+三十二位小数。
  * @param a:浮点数
  * @return byte_container,64bits.
@@ -251,7 +282,32 @@ double __byte2float_34(vector<int> &a)
     }
     // The fraction part.
     double mask = 1.0;
-    for(int i = 18; i <= 31; i++)
+    for(int i = 18; i <= 33; i++)
+    {
+        mask /= 2.0;
+        fraction += (a[i]==1) ? mask : 0;
+    }
+    double ans = integer + fraction;
+    return ans;
+}
+
+/**
+ * @brief 将34位byteContainer转换成浮点数。
+ * @param a:bytecontainer.
+ * @return 转换成的浮点数。
+ */
+double __byte2float_35(vector<int> &a)
+{
+    int integer = 0;
+    double fraction = 0;
+    // The integer part.
+    for(int i = 18; i >= 0; i--)
+    {
+        integer += (a[i] == 1) ? 1 << (17-i) : 0;
+    }
+    // The fraction part.
+    double mask = 1.0;
+    for(int i = 19; i <= 34; i++)
     {
         mask /= 2.0;
         fraction += (a[i]==1) ? mask : 0;
@@ -300,6 +356,7 @@ vector<int> float2byte(double a, int length)
         case 32: return __float2byte_32(a);
         case 33: return __float2byte_33(a);
         case 34: return __float2byte_34(a);
+        case 35: return __float2byte_35(a);
         case 64: return __float2byte_64(a);
         default: 
             std::cerr << "No fixed length provided!\n";
@@ -320,6 +377,7 @@ double byte2float(vector<int> a)
         case 32: return __byte2float_32(a);
         case 33: return __byte2float_33(a);
         case 34: return __byte2float_34(a);
+        case 35: return __byte2float_35(a);
         case 64: return __byte2float_64(a);
         default: 
             std::cerr << "No fixed length container provided!\n";

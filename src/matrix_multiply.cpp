@@ -22,8 +22,8 @@ vector<vector<double> > matrix_fix_multiplication(vector<vector<double> > &v1, v
             throw "v2 size should not be zero.";
         if (v1[0].size() != v2.size())
             throw "-1";
-        if (v1[0].size()!=4 || v2.size()!=4)
-            throw "Dimension not 4.";
+        if ((v1[0].size()!=4 && v2.size()!=4) && (v1[0].size()!=8 && v2.size()!=8))
+            throw "Dimension not 4 or 8!.";
     }
     catch(const std::exception& e)
     {
@@ -36,34 +36,88 @@ vector<vector<double> > matrix_fix_multiplication(vector<vector<double> > &v1, v
     // 2. To get the size of the multiplicated matrix.
     vector<vector<double> > ans(v1.size(), vector<double> (v2[0].size(),0));
     // 3. apply the multiplication. O(n^3)
-    for(size_t i = 0; i < ans.size(); i++)
+    if(v1[0].size()==4)
     {
-        for (size_t j = 0; j < ans[i].size(); j++)
+        for(size_t i = 0; i < ans.size(); i++)
         {
-            // v1(i,0-3), v2(0-3,j);
-            double a1 = v1[i][0], b1 = v2[0][j];
-            double a2 = v1[i][1], b2 = v2[1][j];
-            double a3 = v1[i][2], b3 = v2[2][j];
-            double a4 = v1[i][3], b4 = v2[3][j];
+            for (size_t j = 0; j < ans[i].size(); j++)
+            {
+                // v1(i,0-3), v2(0-3,j);
+                double a1 = v1[i][0], b1 = v2[0][j];
+                double a2 = v1[i][1], b2 = v2[1][j];
+                double a3 = v1[i][2], b3 = v2[2][j];
+                double a4 = v1[i][3], b4 = v2[3][j];
 
-            // change to 16 bits.
-            vector<int> a1_fixed = float2byte(a1,16), b1_fixed = float2byte(b1,16);
-            vector<int> a2_fixed = float2byte(a2,16), b2_fixed = float2byte(b2,16);
-            vector<int> a3_fixed = float2byte(a3,16), b3_fixed = float2byte(b3,16);
-            vector<int> a4_fixed = float2byte(a4,16), b4_fixed = float2byte(b4,16);
-            
-            // 16 bits to 32 bits.
-            vector<int> mul_1 = vec_mul(a1_fixed, b1_fixed);
-            vector<int> mul_2 = vec_mul(a2_fixed, b2_fixed);
-            vector<int> mul_3 = vec_mul(a3_fixed, b3_fixed);
-            vector<int> mul_4 = vec_mul(a4_fixed, b4_fixed);
-            
-            // add them.
-            vector<int> add_1 = vec_add(mul_1,mul_2, 33);
-            vector<int> add_2 = vec_add(mul_3,mul_4, 33);
-            vector<int> res = vec_add(add_1,add_2, 34);  
+                // change to 16 bits.
+                vector<int> a1_fixed = float2byte(a1,16), b1_fixed = float2byte(b1,16);
+                vector<int> a2_fixed = float2byte(a2,16), b2_fixed = float2byte(b2,16);
+                vector<int> a3_fixed = float2byte(a3,16), b3_fixed = float2byte(b3,16);
+                vector<int> a4_fixed = float2byte(a4,16), b4_fixed = float2byte(b4,16);
 
-            ans[i][j] = byte2float(res);
+                // 16 bits to 32 bits.
+                vector<int> mul_1 = vec_mul(a1_fixed, b1_fixed);
+                vector<int> mul_2 = vec_mul(a2_fixed, b2_fixed);
+                vector<int> mul_3 = vec_mul(a3_fixed, b3_fixed);
+                vector<int> mul_4 = vec_mul(a4_fixed, b4_fixed);
+
+                // add them.
+                vector<int> add_1 = vec_add(mul_1,mul_2, 33);
+                vector<int> add_2 = vec_add(mul_3,mul_4, 33);
+                vector<int> res = vec_add(add_1,add_2, 34);  
+
+                ans[i][j] = byte2float(res);
+            }
+        }
+    }
+    else if(v1[0].size() == 8)
+    {
+        for(size_t i = 0; i < ans.size(); i++)
+        {
+            for (size_t j = 0; j < ans[i].size(); j++)
+            {
+                // v1(i,0-3), v2(0-3,j);
+                double a1 = v1[i][0], b1 = v2[0][j];
+                double a2 = v1[i][1], b2 = v2[1][j];
+                double a3 = v1[i][2], b3 = v2[2][j];
+                double a4 = v1[i][3], b4 = v2[3][j];
+                double a5 = v1[i][4], b5 = v2[4][j];
+                double a6 = v1[i][5], b6 = v2[5][j];
+                double a7 = v1[i][6], b7 = v2[6][j];
+                double a8 = v1[i][7], b8 = v2[7][j];
+
+                // change to 16 bits.
+                vector<int> a1_fixed = float2byte(a1,16), b1_fixed = float2byte(b1,16);
+                vector<int> a2_fixed = float2byte(a2,16), b2_fixed = float2byte(b2,16);
+                vector<int> a3_fixed = float2byte(a3,16), b3_fixed = float2byte(b3,16);
+                vector<int> a4_fixed = float2byte(a4,16), b4_fixed = float2byte(b4,16);
+                vector<int> a5_fixed = float2byte(a5,16), b5_fixed = float2byte(b5,16);
+                vector<int> a6_fixed = float2byte(a6,16), b6_fixed = float2byte(b6,16);
+                vector<int> a7_fixed = float2byte(a7,16), b7_fixed = float2byte(b7,16);
+                vector<int> a8_fixed = float2byte(a8,16), b8_fixed = float2byte(b8,16);
+
+                // 16 bits to 32 bits.
+                vector<int> mul_1 = vec_mul(a1_fixed, b1_fixed);
+                vector<int> mul_2 = vec_mul(a2_fixed, b2_fixed);
+                vector<int> mul_3 = vec_mul(a3_fixed, b3_fixed);
+                vector<int> mul_4 = vec_mul(a4_fixed, b4_fixed);
+                vector<int> mul_5 = vec_mul(a5_fixed, b5_fixed);
+                vector<int> mul_6 = vec_mul(a6_fixed, b6_fixed);
+                vector<int> mul_7 = vec_mul(a7_fixed, b7_fixed);
+                vector<int> mul_8 = vec_mul(a8_fixed, b8_fixed);
+
+                // add them.
+                vector<int> add_1 = vec_add(mul_1,mul_2, 33);
+                vector<int> add_2 = vec_add(mul_3,mul_4, 33);
+                vector<int> add_3 = vec_add(mul_5,mul_6, 33);
+                vector<int> add_4 = vec_add(mul_7,mul_8, 33);
+
+                vector<int> res_1 = vec_add(add_1,add_2, 34);  
+                vector<int> res_2 = vec_add(add_1,add_2, 34);
+
+                vector<int> res = vec_add(add_1, add_2, 35);
+
+                ans[i][j] = byte2float(res);
+            }
         }
     }
     return ans;
