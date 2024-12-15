@@ -2,21 +2,31 @@ CC = g++
 OBJ = ./build
 SRC = ./src
 CFLAGS = -std=c++17 -Wall -g
+SO = -shared
 
-all: main
-main: $(OBJ)/matrix_multiply.o $(OBJ)/data_generator.o $(OBJ)/softmax.o $(OBJ)/quantify.o \
-      $(OBJ)/matrix_output.o $(OBJ)/fix_convert.o $(OBJ)/vector_ops.o $(OBJ)/test.o
+all: main # clean
+
+main: $(OBJ)/test.o $(OBJ)/data_generator.o $(OBJ)/matrix_lib.so $(OBJ)/operations.so
 	$(CC) $(CFLAGS) $^ -o main
+
+$(OBJ)/operations.so: $(OBJ)/quantify.o $(OBJ)/softmax.o
+	@mkdir -p $(OBJ)
+	$(CC) $(CFLAGS) $(SO) $^ -o $@
+
+$(OBJ)/matrix_lib.so: $(OBJ)/matrix_multiply.o $(OBJ)/matrix_output.o $(OBJ)/fix_convert.o \
+                      $(OBJ)/vector_ops.o
+	@mkdir -p $(OBJ)
+	$(CC) $(CFLAGS) $(SO) $^ -o $@
 
 $(OBJ)/fix_convert.o: $(SRC)/fix_convert.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ)/test.o: test.cpp
+$(OBJ)/vector_ops.o: $(SRC)/vector_ops.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ)/vector_ops.o: $(SRC)/vector_ops.cpp
+$(OBJ)/test.o: test.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -43,4 +53,4 @@ $(OBJ)/quantify.o: $(SRC)/quantify.cpp
 
 .PHONY: all clean
 clean: 
-	rm -rf ./build/*
+	rm -rf ./build/*.o

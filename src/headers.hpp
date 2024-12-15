@@ -45,4 +45,6 @@ vector<int> vec_add(vector<int> &a, vector<int> &b, int length);
 // #include "quantify.cpp"
 vector<int> vec_truncate(vector<int> &a);
 vector<int> vec_round(vector<int> &a);
+vector<int> vec_sat(vector<int> &a);
+vector<int> vec_wrap(vector<int> &a);
 #endif
