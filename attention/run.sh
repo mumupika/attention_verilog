@@ -1,5 +1,5 @@
 # Using iverilog to generate from .v documents.
-iverilog -o wave pe.v test_pe.v
+iverilog -o wave attention/pe.v attention/test_pe.v
 
 # vvp Icarus Verilog vvp runtime engine.
 vvp -n wave
