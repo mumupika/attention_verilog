@@ -34,6 +34,9 @@ module test_pe();
     initial begin
         $readmemh("activations.txt", mem1);
         $readmemh("weights.txt", mem2);
+        activations <= 16'b0;
+        weights <= 16'b0;
+        counter <= 3'b0;
         clk = 0;
         en = 0;
         rst_n = 0;

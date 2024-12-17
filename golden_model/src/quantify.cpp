@@ -71,7 +71,7 @@ vector<int> vec_sat(vector<int> &a)
         exit(-1);
     }
     vector<int> ans;
-    int end_pt;
+    int end_pt = 0;
     if (a.size() == 34 || a.size() == 26)
     {
         ans = vector<int>(a.begin()+10, a.end());

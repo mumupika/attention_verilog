@@ -9,7 +9,7 @@ all: main # clean
 main: $(OBJ)/test.o $(OBJ)/verilog_input.o $(OBJ)/data_generator.o $(OBJ)/matrix_lib.so $(OBJ)/operations.so
 	$(CC) $(CFLAGS) $^ -o main
 
-$(OBJ)/operations.so: $(OBJ)/quantify.o $(OBJ)/softmax.o $(OBJ)/fix_convert.o
+$(OBJ)/operations.so: $(OBJ)/quantify.o $(OBJ)/softmax.o $(OBJ)/fix_convert.o $(OBJ)/vector_ops.o
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) $(SO) $^ -o $@
 
