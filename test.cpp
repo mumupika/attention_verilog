@@ -25,7 +25,10 @@ int main()
     vector<vector<double> > value_fix = matrix2fix(value, 16);
 
     output(query_fix, std::string("query"));
+    cout << "\n" << query_fix << "\n";
     output(key_fix, std::string("key"));
-
+    cout << "\n" << key_fix << "\n";
+    output(value_fix, std::string("value"));
+    cout << "\n" << value_fix << "\n"; 
     return 0;
 }

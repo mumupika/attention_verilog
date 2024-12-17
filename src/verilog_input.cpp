@@ -118,7 +118,7 @@ void output(vector<vector<double> > &a, string name = std::string(""))
             vector<int> current_byte = float2byte(a[i][j], 16);
             string number = vec2hex(current_byte);
             cout << number << "  ";
-            if(count % 4 == 0)
+            if(count % 8 == 0)
                 cout << "\n";
             count++;
         }
