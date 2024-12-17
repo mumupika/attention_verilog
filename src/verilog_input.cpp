@@ -79,9 +79,10 @@ string vec2hex(vector<int> &a)
  * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
  * @param a:需要转换的16进制数。
  * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
  * @return: 没有返回值。
  */
-void input(vector<vector<double> > &a, string name = std::string(""))
+void input(vector<vector<double> > &a, string name = std::string(""), int length=16)
 {
     ofstream file("data.txt");
     int count = 1;
@@ -90,7 +91,7 @@ void input(vector<vector<double> > &a, string name = std::string(""))
     {
         for(size_t j = 0; j < a[i].size(); j++)
         {
-            vector<int> current_byte = float2byte(a[i][j], 16);
+            vector<int> current_byte = float2byte(a[i][j], length);
             string number = vec2hex(current_byte);
             file << number << "  ";
             if(count % 4 == 0)
@@ -105,9 +106,10 @@ void input(vector<vector<double> > &a, string name = std::string(""))
  * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
  * @param a:需要转换的16进制数。
  * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
  * @return: 没有返回值。
  */
-void output(vector<vector<double> > &a, string name = std::string(""))
+void output(vector<vector<double> > &a, string name = std::string(""), int length=16)
 {
     int count = 1;
     cout << name << "\n\n";
@@ -115,7 +117,7 @@ void output(vector<vector<double> > &a, string name = std::string(""))
     {
         for(size_t j = 0; j < a[i].size(); j++)
         {
-            vector<int> current_byte = float2byte(a[i][j], 16);
+            vector<int> current_byte = float2byte(a[i][j], length);
             string number = vec2hex(current_byte);
             cout << number << "  ";
             if(count % 8 == 0)

@@ -346,7 +346,7 @@ double __byte2float_64(vector<int> &a)
  * @brief 对外使用接口。
  * @param a: 需要进行转换的浮点数。
  * @param length: 需要的长度。
- * @return 一定长度的byte_container, 16/32/34bits.
+ * @return 一定长度的byte_container, 16/32/33/34/35/64bits.
  */
 vector<int> float2byte(double a, int length)
 {

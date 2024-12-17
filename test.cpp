@@ -24,11 +24,15 @@ int main()
     vector<vector<double> > key_fix = matrix2fix(key, 16);
     vector<vector<double> > value_fix = matrix2fix(value, 16);
 
-    output(query_fix, std::string("query"));
+    output(query_fix, std::string("query"),16);
     cout << "\n" << query_fix << "\n";
-    output(key_fix, std::string("key"));
+    output(key_fix, std::string("key"),16);
     cout << "\n" << key_fix << "\n";
-    output(value_fix, std::string("value"));
+    output(value_fix, std::string("value"),16);
     cout << "\n" << value_fix << "\n"; 
+
+    vector<vector<double> > attn_fix = matrix_fix_multiplication(key_fix,query_fix);
+    output(attn_fix, std::string("attention block"),34);
+    cout << "\n" << attn_fix << "\n";
     return 0;
 }

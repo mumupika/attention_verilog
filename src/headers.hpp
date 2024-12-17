@@ -53,6 +53,6 @@ vector<vector<double> > quantify_matrix(vector<vector<double > > &a, int strateg
 
 // #include "verilog_input.cpp"
 string vec2hex(vector<int> &a);
-void input(vector<vector<double> > &a, string name);
-void output(vector<vector<double> > &a, string name);
+void input(vector<vector<double> > &a, string name, int length);
+void output(vector<vector<double> > &a, string name, int length);
 #endif
