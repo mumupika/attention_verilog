@@ -21,7 +21,6 @@ module pe_8x8_cluster(
     wire [35:0]pe_output_sums[0:7][0:7];
 
     // 定义内部寄存器。
-    reg store_done[0:7][0:7];
     reg [35:0]store_orig_sums[0:7][0:7];
     reg [15:0]store_output_sums[0:7][0:7];
 
@@ -54,7 +53,7 @@ module pe_8x8_cluster(
             pe pe_0i(
                 .active_left(pe_output_activates[0][i]),
                 .in_weight(pe_output_weights[0][i]),
-                .input_done(store_done[0][i-1]),
+                .input_done(done_signals[0][i-1]),
                 .clk(clk),
                 .en(en),
                 .rst_n(rst_n),
@@ -77,8 +76,8 @@ module pe_8x8_cluster(
                 .rst_n(rst_n),
                 .active_right(pe_output_activates[i][1]),
                 .out_weight(pe_output_weights[i+1][0]),
-                .sum(pe_output_sums[0][i]),
-                .calc_done(done_signals[0][i])
+                .sum(pe_output_sums[i][0]),
+                .calc_done(done_signals[i][0])
             );
         end
     endgenerate
@@ -90,7 +89,7 @@ module pe_8x8_cluster(
                 pe pe_general(
                     .active_left(pe_output_activates[i][j]),
                     .in_weight(pe_output_weights[i][j]),
-                    .input_done(store_done[i][j-1]),
+                    .input_done(done_signals[i][j-1]),
                     .clk(clk),
                     .en(en),
                     .rst_n(rst_n),
@@ -108,9 +107,6 @@ module pe_8x8_cluster(
         if (en == 0 || rst_n == 0) begin
             for (row = 0; row < 8; row = row + 1) begin
                 for(col = 0; col < 8; col = col + 1) begin
-                    // store_weights[row][col] <= 16'b0;
-                    // store_activates[row][col] <= 16'b0;
-                    store_done[row][col] <= 1'b0;
                     store_orig_sums[row][col] <= 36'b0;
                     store_output_sums[row][col] <= 16'b0;
                 end
@@ -122,12 +118,11 @@ module pe_8x8_cluster(
         else if (en == 1 || rst_n == 1) begin
             for(row = 0; row < 8; row = row + 1) begin
                 for (col = 0; col < 8; col = col + 1) begin
-                    store_done[row][col] <= done_signals[row][col];
                     store_orig_sums[row][col] <= pe_output_sums[row][col];
                 end
             end
              for (row = 0; row < 8; row = row + 1) begin
-                output_dones [row] <= store_done[row][7];
+                output_dones [row] <= done_signals[row][7];
             end
         end
     end

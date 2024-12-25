@@ -56,6 +56,7 @@ module test_pe_8x8();
             input_weights <= 0;
             counter[i] <= 0;
             debug <= 0;
+            done <= 0;
         end
         #5 en <= 1;
         #10 rst_n <= 1;
