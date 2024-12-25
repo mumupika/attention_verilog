@@ -8,6 +8,5 @@ For Golden model, this is for checking the results of the hardware output. To se
 
 ```bash
 cd golden_model
-make        # The executable file will be stored under golden_model/build
-./main      # execute.
+make && ./main 
 ```

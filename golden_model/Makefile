@@ -4,7 +4,7 @@ SRC = ./src
 CFLAGS = -std=c++17 -Wall -g
 SO = -shared
 
-all: main # clean
+all: main dist-clean
 
 main: $(OBJ)/test.o $(OBJ)/verilog_input.o $(OBJ)/data_generator.o $(OBJ)/matrix_lib.so $(OBJ)/operations.so
 	$(CC) $(CFLAGS) $^ -o main
@@ -54,6 +54,8 @@ $(OBJ)/verilog_input.o: $(SRC)/verilog_input.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: all clean
+.PHONY: all clean dist-clean
 clean: 
+	rm -rf ./build
+dist-clean:
 	rm -rf ./build/*.o
