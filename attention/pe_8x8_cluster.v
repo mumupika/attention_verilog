@@ -34,73 +34,13 @@ module pe_8x8_cluster(
     endgenerate
 
     // 输出线网连接。
-    assign results = 
-    {  
-        store_orig_sums[7][7],
-        store_orig_sums[7][6],
-        store_orig_sums[7][5],
-        store_orig_sums[7][4],
-        store_orig_sums[7][3],
-        store_orig_sums[7][2],
-        store_orig_sums[7][1],
-        store_orig_sums[7][0],
-        store_orig_sums[6][7],
-        store_orig_sums[6][6],
-        store_orig_sums[6][5],
-        store_orig_sums[6][4],
-        store_orig_sums[6][3],
-        store_orig_sums[6][2],
-        store_orig_sums[6][1],
-        store_orig_sums[6][0],
-        store_orig_sums[5][7],
-        store_orig_sums[5][6],
-        store_orig_sums[5][5],
-        store_orig_sums[5][4],
-        store_orig_sums[5][3],
-        store_orig_sums[5][2],
-        store_orig_sums[5][1],
-        store_orig_sums[5][0],
-        store_orig_sums[4][7],
-        store_orig_sums[4][6],
-        store_orig_sums[4][5],
-        store_orig_sums[4][4],
-        store_orig_sums[4][3],
-        store_orig_sums[4][2],
-        store_orig_sums[4][1],
-        store_orig_sums[4][0],
-        store_orig_sums[3][7],
-        store_orig_sums[3][6],
-        store_orig_sums[3][5],
-        store_orig_sums[3][4],
-        store_orig_sums[3][3],
-        store_orig_sums[3][2],
-        store_orig_sums[3][1],
-        store_orig_sums[3][0],
-        store_orig_sums[2][7],
-        store_orig_sums[2][6],
-        store_orig_sums[2][5],
-        store_orig_sums[2][4],
-        store_orig_sums[2][3],
-        store_orig_sums[2][2],
-        store_orig_sums[2][1],
-        store_orig_sums[2][0],
-        store_orig_sums[1][7],
-        store_orig_sums[1][6],
-        store_orig_sums[1][5],
-        store_orig_sums[1][4],
-        store_orig_sums[1][3],
-        store_orig_sums[1][2],
-        store_orig_sums[1][1],
-        store_orig_sums[1][0],
-        store_orig_sums[0][7],
-        store_orig_sums[0][6],
-        store_orig_sums[0][5],
-        store_orig_sums[0][4],
-        store_orig_sums[0][3],
-        store_orig_sums[0][2],
-        store_orig_sums[0][1],
-        store_orig_sums[0][0]
-    };
+    generate
+        for (i=0;i<8;i=i+1) begin:output_dones_row
+            for (j=0;j<8;j=j+1) begin:output_dones_col
+                assign results[((8*i + j + 1)*36 - 1): (8*i + j)*36] = store_orig_sums[i][j];
+            end
+        end
+    endgenerate
     
     // 模块实例化。
     pe pe_00(
@@ -186,74 +126,9 @@ module pe_8x8_cluster(
             for(row = 0; row < 8; row = row + 1) begin
                 for (col = 0; col < 8; col = col + 1) begin
                     store_orig_sums[row][col] <= pe_output_sums[row][col];
+                    output_dones[row*8+col] <= done_signals[row][col];
                 end
             end
-            output_dones <= {
-                done_signals[7][7],
-                done_signals[7][6],
-                done_signals[7][5],
-                done_signals[7][4],
-                done_signals[7][3],
-                done_signals[7][2],
-                done_signals[7][1],
-                done_signals[7][0],
-                done_signals[6][7],
-                done_signals[6][6],
-                done_signals[6][5],
-                done_signals[6][4],
-                done_signals[6][3],
-                done_signals[6][2],
-                done_signals[6][1],
-                done_signals[6][0],
-                done_signals[5][7],
-                done_signals[5][6],
-                done_signals[5][5],
-                done_signals[5][4],
-                done_signals[5][3],
-                done_signals[5][2],
-                done_signals[5][1],
-                done_signals[5][0],
-                done_signals[4][7],
-                done_signals[4][6],
-                done_signals[4][5],
-                done_signals[4][4],
-                done_signals[4][3],
-                done_signals[4][2],
-                done_signals[4][1],
-                done_signals[4][0],
-                done_signals[3][7],
-                done_signals[3][6],
-                done_signals[3][5],
-                done_signals[3][4],
-                done_signals[3][3],
-                done_signals[3][2],
-                done_signals[3][1],
-                done_signals[3][0],
-                done_signals[2][7],
-                done_signals[2][6],
-                done_signals[2][5],
-                done_signals[2][4],
-                done_signals[2][3],
-                done_signals[2][2],
-                done_signals[2][1],
-                done_signals[2][0],
-                done_signals[1][7],
-                done_signals[1][6],
-                done_signals[1][5],
-                done_signals[1][4],
-                done_signals[1][3],
-                done_signals[1][2],
-                done_signals[1][1],
-                done_signals[1][0],
-                done_signals[0][7],
-                done_signals[0][6],
-                done_signals[0][5],
-                done_signals[0][4],
-                done_signals[0][3],
-                done_signals[0][2],
-                done_signals[0][1],
-                done_signals[0][0]
-            };
         end
     end
 endmodule
