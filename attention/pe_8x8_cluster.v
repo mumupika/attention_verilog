@@ -178,6 +178,7 @@ module pe_8x8_cluster(
                 for(col = 0; col < 8; col = col + 1) begin
                     store_orig_sums[row][col] <= 36'b0;
                     store_output_sums[row][col] <= 16'b0;
+                    output_dones <= 0;
                 end
             end
         end
