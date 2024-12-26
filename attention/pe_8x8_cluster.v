@@ -12,7 +12,7 @@ module pe_8x8_cluster(
     output reg [7:0] output_dones,
     output reg [127:0] o_activations,
     output reg [127:0] o_weights,
-    output reg [127:0] results
+    output wire [2303:0] results
 );
     // 定义内部线网。
     wire [15:0]pe_output_weights[0:8][0:7];
@@ -32,6 +32,75 @@ module pe_8x8_cluster(
                 assign pe_output_weights[0][i] = weights[((i+1)*16-1):i*16];
         end
     endgenerate
+
+    // 输出线网连接。
+    assign results = 
+    {  
+        store_orig_sums[7][7],
+        store_orig_sums[7][6],
+        store_orig_sums[7][5],
+        store_orig_sums[7][4],
+        store_orig_sums[7][3],
+        store_orig_sums[7][2],
+        store_orig_sums[7][1],
+        store_orig_sums[7][0],
+        store_orig_sums[6][7],
+        store_orig_sums[6][6],
+        store_orig_sums[6][5],
+        store_orig_sums[6][4],
+        store_orig_sums[6][3],
+        store_orig_sums[6][2],
+        store_orig_sums[6][1],
+        store_orig_sums[6][0],
+        store_orig_sums[5][7],
+        store_orig_sums[5][6],
+        store_orig_sums[5][5],
+        store_orig_sums[5][4],
+        store_orig_sums[5][3],
+        store_orig_sums[5][2],
+        store_orig_sums[5][1],
+        store_orig_sums[5][0],
+        store_orig_sums[4][7],
+        store_orig_sums[4][6],
+        store_orig_sums[4][5],
+        store_orig_sums[4][4],
+        store_orig_sums[4][3],
+        store_orig_sums[4][2],
+        store_orig_sums[4][1],
+        store_orig_sums[4][0],
+        store_orig_sums[3][7],
+        store_orig_sums[3][6],
+        store_orig_sums[3][5],
+        store_orig_sums[3][4],
+        store_orig_sums[3][3],
+        store_orig_sums[3][2],
+        store_orig_sums[3][1],
+        store_orig_sums[3][0],
+        store_orig_sums[2][7],
+        store_orig_sums[2][6],
+        store_orig_sums[2][5],
+        store_orig_sums[2][4],
+        store_orig_sums[2][3],
+        store_orig_sums[2][2],
+        store_orig_sums[2][1],
+        store_orig_sums[2][0],
+        store_orig_sums[1][7],
+        store_orig_sums[1][6],
+        store_orig_sums[1][5],
+        store_orig_sums[1][4],
+        store_orig_sums[1][3],
+        store_orig_sums[1][2],
+        store_orig_sums[1][1],
+        store_orig_sums[1][0],
+        store_orig_sums[0][7],
+        store_orig_sums[0][6],
+        store_orig_sums[0][5],
+        store_orig_sums[0][4],
+        store_orig_sums[0][3],
+        store_orig_sums[0][2],
+        store_orig_sums[0][1],
+        store_orig_sums[0][0]
+    };
     
     // 模块实例化。
     pe pe_00(
@@ -121,7 +190,7 @@ module pe_8x8_cluster(
                     store_orig_sums[row][col] <= pe_output_sums[row][col];
                 end
             end
-             for (row = 0; row < 8; row = row + 1) begin
+            for (row = 0; row < 8; row = row + 1) begin
                 output_dones [row] <= done_signals[row][7];
             end
         end

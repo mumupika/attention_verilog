@@ -1,4 +1,4 @@
-`include "pe.v"
+`include "../pe.v"
 module test_pe();
     // 输入模块
     reg clk;

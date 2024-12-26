@@ -1,4 +1,4 @@
-`include "pe_8x8_cluster.v"
+`include "../pe_8x8_cluster.v"
 module test_pe_8x8();
     // 定义线网和寄存器。
     reg clk;
@@ -15,11 +15,10 @@ module test_pe_8x8();
     reg [127:0] input_weights;
     reg [7:0] done;
 
-    reg [16:0] debug;
 
     wire [127:0] output_actives;
     wire [127:0] output_weights;
-    wire [127:0] results;
+    wire [2303:0] results;
     wire [7:0] output_done;
 
     initial begin
@@ -28,8 +27,8 @@ module test_pe_8x8();
     end
 
     initial begin
-        $readmemh("./datas/activations.txt",mem1);
-        $readmemh("./datas/weights.txt",mem2);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\activations.txt",mem1);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\weights.txt",mem2);
     end
 
     pe_8x8_cluster cluster(
@@ -55,7 +54,6 @@ module test_pe_8x8();
             input_activations <= 0;
             input_weights <= 0;
             counter[i] <= 0;
-            debug <= 0;
             done <= 0;
         end
         #5 en <= 1;
@@ -90,12 +88,11 @@ module test_pe_8x8();
                 input_weights <= 0;
                 counter[i] <= 0;
         end
-        if (output_done[7] == 1 || debug >= 1024) begin
+        if (output_done[7] == 1) begin
             $finish;
         end
         else if (en == 1 && rst_n == 1) begin
             // 进行计数和计算部分。直到读取完成所有的权重和激励。NUMS=4.
-            debug <= debug + 1;
             if(counter[0] < NUMS) begin
                 input_activations[15:0] <= mem1[counter[0]];
                 input_weights[15:0] <= mem2[counter[0]];

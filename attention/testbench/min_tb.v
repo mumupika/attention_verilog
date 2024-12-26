@@ -1,4 +1,4 @@
-`include "min.v"
+`include "../min.v"
 module test_min ();
 
     // SRAM
