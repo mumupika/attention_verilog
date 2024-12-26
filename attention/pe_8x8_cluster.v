@@ -9,9 +9,9 @@ module pe_8x8_cluster(
     input wire en,
     input wire rst_n,
     input wire [7:0] done,    // 用于判断计算结束。
-    output reg [7:0] output_dones,
     output reg [127:0] o_activations,
     output reg [127:0] o_weights,
+    output reg [63:0] output_dones,
     output wire [2303:0] results
 );
     // 定义内部线网。
@@ -180,9 +180,6 @@ module pe_8x8_cluster(
                     store_output_sums[row][col] <= 16'b0;
                 end
             end
-            for (row = 0; row < 8; row = row + 1) begin
-                output_dones [row] <= 0;
-            end
         end
         else if (en == 1 || rst_n == 1) begin
             for(row = 0; row < 8; row = row + 1) begin
@@ -190,9 +187,72 @@ module pe_8x8_cluster(
                     store_orig_sums[row][col] <= pe_output_sums[row][col];
                 end
             end
-            for (row = 0; row < 8; row = row + 1) begin
-                output_dones [row] <= done_signals[row][7];
-            end
+            output_dones <= {
+                done_signals[7][7],
+                done_signals[7][6],
+                done_signals[7][5],
+                done_signals[7][4],
+                done_signals[7][3],
+                done_signals[7][2],
+                done_signals[7][1],
+                done_signals[7][0],
+                done_signals[6][7],
+                done_signals[6][6],
+                done_signals[6][5],
+                done_signals[6][4],
+                done_signals[6][3],
+                done_signals[6][2],
+                done_signals[6][1],
+                done_signals[6][0],
+                done_signals[5][7],
+                done_signals[5][6],
+                done_signals[5][5],
+                done_signals[5][4],
+                done_signals[5][3],
+                done_signals[5][2],
+                done_signals[5][1],
+                done_signals[5][0],
+                done_signals[4][7],
+                done_signals[4][6],
+                done_signals[4][5],
+                done_signals[4][4],
+                done_signals[4][3],
+                done_signals[4][2],
+                done_signals[4][1],
+                done_signals[4][0],
+                done_signals[3][7],
+                done_signals[3][6],
+                done_signals[3][5],
+                done_signals[3][4],
+                done_signals[3][3],
+                done_signals[3][2],
+                done_signals[3][1],
+                done_signals[3][0],
+                done_signals[2][7],
+                done_signals[2][6],
+                done_signals[2][5],
+                done_signals[2][4],
+                done_signals[2][3],
+                done_signals[2][2],
+                done_signals[2][1],
+                done_signals[2][0],
+                done_signals[1][7],
+                done_signals[1][6],
+                done_signals[1][5],
+                done_signals[1][4],
+                done_signals[1][3],
+                done_signals[1][2],
+                done_signals[1][1],
+                done_signals[1][0],
+                done_signals[0][7],
+                done_signals[0][6],
+                done_signals[0][5],
+                done_signals[0][4],
+                done_signals[0][3],
+                done_signals[0][2],
+                done_signals[0][1],
+                done_signals[0][0]
+            };
         end
     end
 endmodule

@@ -19,7 +19,7 @@ module test_pe_8x8();
     wire [127:0] output_actives;
     wire [127:0] output_weights;
     wire [2303:0] results;
-    wire [7:0] output_done;
+    wire [63:0] output_done;
 
     initial begin
         $dumpfile("wave.vcd");
@@ -88,7 +88,7 @@ module test_pe_8x8();
                 input_weights <= 0;
                 counter[i] <= 0;
         end
-        if (output_done[7] == 1) begin
+        if (output_done[63] == 1) begin
             $finish;
         end
         else if (en == 1 && rst_n == 1) begin
