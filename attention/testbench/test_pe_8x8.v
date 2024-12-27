@@ -44,9 +44,10 @@ module test_pe_8x8();
         .results(results)
     );
 
-    integer i;
+    integer i,fd;
 
     initial begin
+        fd = $fopen("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\attention_test.txt","w");
         clk <= 0;
         en <= 0;
         rst_n <= 0;
@@ -89,6 +90,8 @@ module test_pe_8x8();
                 counter[i] <= 0;
         end
         if (output_done[63] == 1) begin
+            $fwrite(fd, "%X", results);
+            $fclose(fd);
             $finish;
         end
         else if (en == 1 && rst_n == 1) begin

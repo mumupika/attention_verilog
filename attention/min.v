@@ -1,5 +1,5 @@
 module FindMin(
-    input wire [128:0]numbers,
+    input wire [127:0]numbers,
     input wire clk,
     input wire start,    // 开始信号。
     input wire rst_n,

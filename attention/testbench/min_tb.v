@@ -3,7 +3,7 @@ module test_min ();
 
     // SRAM
     reg [15:0] mem[0:7];
-    reg [128:0] prepare_input;
+    reg [127:0] prepare_input;
     reg clk,start,rst_n;
 
     wire [15:0] res;
@@ -27,7 +27,7 @@ module test_min ();
         start <= 0;
         rst_n <= 0;
         counter <= 0;
-        $readmemh("./datas/minimum.txt",mem);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\minimum.txt",mem);
         #5 start <= 1;
         #5 rst_n <= 1;
     end
