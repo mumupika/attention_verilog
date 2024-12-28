@@ -95,6 +95,7 @@ module pe_8x8_top(
             reset_cluster <= 0;
             all_done <= 0;
             attention_flag <= 0;
+            final_res <= 0;
             for (col = 0; col < 8; col = col + 1) begin
                 minimum_col_numbers[col] <= 0;
                 minimum_start[col] <= 0;
