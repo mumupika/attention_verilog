@@ -4,7 +4,7 @@ SRC = ./src
 CFLAGS = -std=c++17 -Wall -g
 SO = -shared
 
-all: main dist-clean
+all: main
 
 main: $(OBJ)/test.o $(OBJ)/verilog_input.o $(OBJ)/data_generator.o $(OBJ)/matrix_lib.so $(OBJ)/operations.so
 	$(CC) $(CFLAGS) $^ -o main

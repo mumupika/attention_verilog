@@ -52,7 +52,7 @@ vector<int> vec_round(vector<int> &a)
     for(int i = (int)ans.size()-1; i>=0; i--)
     {
         int val = ans[i] + carry;
-        carry = val << 1;
+        carry = val >> 1;
         ans[i] = val & 1;
     }
     return ans;

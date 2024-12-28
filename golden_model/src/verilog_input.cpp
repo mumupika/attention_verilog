@@ -127,3 +127,55 @@ void output(vector<vector<double> > &a, string name = std::string(""), int lengt
     }
     cout << "\n";
 }
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_transpose(vector<vector<double> > &a, string name = std::string(""), int length=16)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t j = 0; j < a[0].size(); j++)
+    {
+        for(size_t i = 0; i < a.size(); i++)
+        {
+            vector<int> current_byte = float2byte(a[i][j], length);
+            string number = vec2hex(current_byte);
+            cout << number << "  ";
+            if(count % 4 == 0)
+                cout << "\n";
+            count++;
+        }
+    }
+    cout << "\n";
+}
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_4(vector<vector<double> > &a, string name = std::string(""), int length=16)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t i = 0; i < a.size(); i++)
+    {
+        for(size_t j = 0; j < a[i].size(); j++)
+        {
+            vector<int> current_byte = float2byte(a[i][j], length);
+            string number = vec2hex(current_byte);
+            cout << number << "  ";
+            if(count % 4 == 0)
+                cout << "\n";
+            count++;
+        }
+    }
+    cout << "\n";
+}

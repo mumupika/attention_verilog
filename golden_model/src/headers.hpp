@@ -55,4 +55,6 @@ vector<vector<double> > quantify_matrix(vector<vector<double > > &a, int strateg
 string vec2hex(vector<int> &a);
 void input(vector<vector<double> > &a, string name, int length);
 void output(vector<vector<double> > &a, string name, int length);
+void output_transpose(vector<vector<double> > &a, string name, int length);
+void output_4(vector<vector<double> > &a, string name, int length);
 #endif
