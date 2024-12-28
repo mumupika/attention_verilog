@@ -7,7 +7,7 @@ module pe_8x8_top(
     input wire [511:0]key,
     input wire [511:0]value,
     input wire [511:0]query,
-    output reg [255:0] final_res,
+    output reg [511:0] final_res,
     output reg all_done
 );
 
@@ -21,7 +21,8 @@ module pe_8x8_top(
     reg [15:0]quantified_ans[0:7][0:7];
     reg [4:0]flags[0:7][0:7];    // 复用。表示每个阶段每个寄存器状态。
     reg [35:0]softmax_res[0:7][0:7];
-    reg [2:0]input_counter[0:7];    // 八路输入控制。
+    reg [3:0]input_counter[0:7];    // 八路输入控制。
+    reg attention_flag;
 
     wire [63:0] cluster_calc_done;
     wire [2303:0] original_sums;
@@ -93,6 +94,7 @@ module pe_8x8_top(
             input_done <= 0;
             reset_cluster <= 0;
             all_done <= 0;
+            attention_flag <= 0;
             for (col = 0; col < 8; col = col + 1) begin
                 minimum_col_numbers[col] <= 0;
                 minimum_start[col] <= 0;
@@ -116,22 +118,25 @@ module pe_8x8_top(
             reset_cluster <= 1;
             
             // 处理数据读入操作。flag此时为0.
-            if(input_counter[0] >= 0 && input_counter[0] <= 4)
-                input_counter[0] <= input_counter[0] + 1;
-            for(row = 0; row < 8; row = row + 1) begin
-                if(input_counter[row] > 0 && input_counter[row] <= 4) begin
-                    key_attn[row*16 +: 16] <= input_keys[row][input_counter[row] - 1];
-                    query_val[row*16 +: 16] <= input_queries[row][input_counter[row] - 1];
-                    input_counter[row] <= input_counter[row] + 1;
-                    if(row + 1 < 8)
-                        input_counter[row+1] <= input_counter[row+1] + 1;
-                end
-                else if(input_counter[row] > 4) begin
-                    input_done[row] <= 1;
-                    key_attn[row*16 +: 16] <= 0;
-                    query_val[row*16 +: 16] <= 0;
+            if(attention_flag == 0)  begin
+                if(input_counter[0] >= 0 && input_counter[0] <= 4)
+                    input_counter[0] <= input_counter[0] + 1;
+                for(row = 0; row < 8; row = row + 1) begin
+                    if(input_counter[row] > 0 && input_counter[row] <= 4) begin
+                        key_attn[row*16 +: 16] <= input_keys[row][input_counter[row] - 1];
+                        query_val[row*16 +: 16] <= input_queries[row][input_counter[row] - 1];
+                        input_counter[row] <= input_counter[row] + 1;
+                        if(row + 1 < 8)
+                            input_counter[row+1] <= input_counter[row+1] + 1;
+                    end
+                    else if(input_counter[row] > 4) begin
+                        input_done[row] <= 1;
+                        key_attn[row*16 +: 16] <= 0;
+                        query_val[row*16 +: 16] <= 0;
+                    end
                 end
             end
+            
     
 
             // 处理每个单元的量化操作。flag处理完成为1.
@@ -153,8 +158,9 @@ module pe_8x8_top(
             end
 
             // 归零所有pe单元。输入数据。
-            if(flags[7][7] == 1) begin
+            if(flags[7][7] >= 1 && flags[7][7] < 3) begin
                 reset_cluster <= 0;
+                attention_flag <= 1;
                 key_attn <= 0;
                 query_val <= 0;
                 input_done <= 0;
@@ -166,6 +172,9 @@ module pe_8x8_top(
             for (col = 0; col < 8; col = col + 1) begin
                 if(flags[7][col] == 1) begin
                     minimum_start[col] <= 1;
+                    for (row = 0; row < 8; row = row + 1) begin
+                        minimum_col_numbers[col][row * 16 +: 16] <= quantified_ans[row][col];
+                    end
                 end
                 if(minimum_done[col] == 1) begin
                     for(row = 0; row < 8; row = row + 1) begin
@@ -194,44 +203,31 @@ module pe_8x8_top(
             end
 
             // 读入新的数据。
-            if (flags[7][7] == 3) begin
-                input_counter[0] <= input_counter[0] + 1;
-                for(row = 0; row < 4; row = row + 1) begin
+            if (flags[7][7] == 3 && attention_flag <= 1) begin
+                if(input_counter[0] >= 0 && input_counter[0] <= 8)
+                    input_counter[0] <= input_counter[0] + 1;
+                for(row = 0; row < 8; row = row + 1) begin
                     if (input_counter[row]>0 && input_counter[row]<=8) begin
-                        key_attn[row*16 +: 16] <= quantified_ans[row][input_counter[row] - 1];
-                        query_val[row*16 +: 16] <= input_values[row][input_counter[row] - 1];
+                        key_attn[row*16 +: 16] <= quantified_ans[input_counter[row] - 1][row];
+                        if(row < 4)
+                            query_val[row*16 +: 16] <= input_values[row][input_counter[row] - 1];
+                        else
+                            query_val[row*16 +: 16] <= 0;
                         input_counter[row] <= input_counter[row] + 1;
-                        input_counter[row+1] <= input_counter[row+1] + 1;
+                        if(row+1<8)
+                            input_counter[row+1] <= input_counter[row+1] + 1;
                     end
-                    else begin
+                    else if (input_counter[row] > 8) begin
                         input_done[row] <= 1;
                         key_attn[row*16 +: 16] <= 0;
                         query_val[row*16 +: 16] <= 0;
                     end
                 end
-                for(row = 4; row < 8; row = row + 1) begin
-                    if (input_counter[row]>0 && input_counter[row]<=8) begin
-                        key_attn[row*16 +: 16] <= input_keys[row][input_counter[row] - 1];
-                        query_val[row*16 +: 16] <= 0;
-                        input_counter[row] <= input_counter[row] + 1;
-                        input_counter[row+1] <= input_counter[row+1] + 1;
-                    end
-                    else if(input_counter[row] > 8) begin
-                        input_done[row] <= 1;
-                        key_attn[row*16 +: 16] <= 0;
-                        query_val[row*16 +: 16] <= 0;
-                    end
-                end
-            end
-            if(input_counter[7] > 4) begin
-                input_done[7] <= 1;
-                key_attn[7*16 +: 16] <= 0;
-                query_val[7*16 +: 16] <= 0;
             end
 
             // 处理每个单元的量化操作。flag处理完成为4.
-            for(row = 0; row < 4; row = row + 1) begin
-                for (col = 0; col < 8; col = col + 1) begin
+            for(row = 0; row < 8; row = row + 1) begin
+                for (col = 0; col < 4; col = col + 1) begin
                     // 计算完成信号出现，进行量化操作。
                     if(calc_done_signals[row][col] == 1 && flags[row][col] == 3) begin
                         if (calc_done_results[row][col][23:7]+1'b1 == 0 || calc_done_results[row][col][35:24] > 0)
@@ -246,16 +242,16 @@ module pe_8x8_top(
                     end
                 end
             end
-            if(flags[3][7] == 4) begin
-                for(row = 0; row < 4; row = row + 1) begin
-                    for(col = 0; col < 8; col = col + 1) begin
-                        final_res[4*row + col] <= quantified_ans[row][col];
+            if(flags[7][3] == 4) begin
+                for(row = 0; row < 8; row = row + 1) begin
+                    for(col = 0; col < 4; col = col + 1) begin
+                        final_res[(4*row + col)*16 +: 16] <= quantified_ans[row][col];
                         flags[row][col] <= flags[row][col] + 1;
                     end
                 end
             end
 
-            if(flags[3][7] == 5)
+            if(flags[7][3] == 5)
                 all_done <= 1;
         end
     end

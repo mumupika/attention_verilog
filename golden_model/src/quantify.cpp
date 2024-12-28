@@ -10,9 +10,9 @@ using namespace std;
  */
 vector<int> vec_truncate(vector<int> &a)
 {
-    if(a.size()!=34 && a.size()!=24 && a.size()!=35)
+    if(a.size()!=34 && a.size()!=24 && a.size()!=35 && a.size()!= 36 && a.size()!=32)
     {
-        std::cerr << "Error! Truncating size should be 34 or 24 or 35!\n";
+        std::cerr << "Error! Truncating size should be 34/24/35/36/32!\n";
         exit(-1);
     }
     vector<int> ans;
@@ -22,6 +22,10 @@ vector<int> vec_truncate(vector<int> &a)
         ans = vector<int>(a.begin(),a.begin()+27);
     else if(a.size() == 24)
         ans = vector<int>(a.begin(),a.begin()+16);
+    else if(a.size() == 36)
+        ans = vector<int>(a.begin(),a.begin()+28);
+    else if(a.size()==32)
+        ans = vector<int>(a.begin(),a.begin()+24);
 
     return ans;
 }
@@ -33,18 +37,22 @@ vector<int> vec_truncate(vector<int> &a)
  */
 vector<int> vec_round(vector<int> &a)
 {
-    if(a.size()!=34 && a.size()!=24 && a.size()!=35)
+    if(a.size()!=34 && a.size()!=24 && a.size()!=35 && a.size()!= 36 && a.size()!=32)
     {
-        std::cerr << "Error! Truncating size should be 34 or 24 or 35!\n";
+        std::cerr << "Error! Truncating size should be 34/24/35/36/32!\n";
         exit(-1);
     }
     vector<int> ans;
     if (a.size()==34)
         ans = vector<int>(a.begin(),a.begin()+26);
-     else if(a.size() == 35)
+    else if(a.size() == 35)
         ans = vector<int>(a.begin(),a.begin()+27);
-    else
+    else if(a.size() == 24)
         ans = vector<int>(a.begin(),a.begin()+16);
+    else if(a.size()==36)
+        ans = vector<int>(a.begin(),a.begin()+28);
+    else if(a.size()==32)
+        ans = vector<int>(a.begin(),a.begin()+24);
     
     int carry = (a[ans.size()] + 1) >> 1;
     if (carry == 0) 
@@ -65,7 +73,7 @@ vector<int> vec_round(vector<int> &a)
  */
 vector<int> vec_sat(vector<int> &a)
 {
-    if(a.size() != 34 && a.size() != 26 && a.size() != 27 && a.size() != 35)
+    if(a.size() != 34 && a.size() != 26 && a.size() != 27 && a.size() != 35 && a.size()!=24)
     {
         std::cerr << "Error! Saturation size should be 34 or 26 or 27 or 35!\n";
         exit(-1);
@@ -81,6 +89,11 @@ vector<int> vec_sat(vector<int> &a)
     {
         ans = vector<int>(a.begin()+11, a.end());
         end_pt = 11;
+    }
+    else if(a.size()==24)
+    {
+        ans = vector<int>(a.begin()+8, a.end());
+        end_pt = 8;
     }
     // 1. 判断是否发生了溢出情况。
     int flag = 0;
@@ -106,7 +119,7 @@ vector<int> vec_sat(vector<int> &a)
  */
 vector<int> vec_wrap(vector<int> &a)
 {
-    if(a.size() != 34 && a.size() != 26 && a.size() != 27 && a.size() != 35)
+    if(a.size() != 34 && a.size() != 26 && a.size() != 27 && a.size() != 35 && a.size()!=24)
     {
         std::cerr << "Error! Saturation size should be 34 or 26 or 27 or 35!\n";
         exit(-1);
@@ -119,6 +132,10 @@ vector<int> vec_wrap(vector<int> &a)
     else if(a.size() == 35 || a.size() == 27)
     {
         ans = vector<int>(a.begin()+11, a.end());
+    }
+    else if(a.size()==24)
+    {
+        ans = vector<int>(a.begin()+8, a.end());
     }
     return ans;
 }
@@ -168,6 +185,51 @@ vector<vector<double> > quantify_matrix(vector<vector<double > > &a, int strateg
                     exit(-1);
             }
             ans[i][j] = byte2float(quantified);
+        }
+    }
+    return ans;
+}
+
+/**
+ * @brief 对矩阵进行量化。输入矩阵应当均为34位对应的float。
+ * @param a:输入的二维矩阵。
+ * @param strategy:进行量化的策略。1 -round+sat; 2 - round+wrap; 3 - trunc+sat; 4 - trunc + wrap.
+ * @param fix_point: 34位或35位精确长浮点数。
+ * @return 经过量化并且重新转换后的矩阵。
+ */
+vector<vector<vector<int> > > quantify_matrix_container(vector<vector<vector<int> > > &a, int strategy)
+{
+    vector<vector<vector<int> > > ans(a.size(), vector<vector<int> >(a[0].size()));
+    for(size_t i = 0; i < a.size(); i++)
+    {
+        for(size_t j = 0; j < a[i].size(); j++)
+        {
+            vector<int> byte_container = a[i][j];
+            vector<int> tmp,quantified;
+            switch(strategy)
+            {
+                case 1: 
+                    tmp = vec_round(byte_container);
+                    quantified = vec_sat(tmp);
+                    break;
+                case 2:
+                    tmp = vec_round(byte_container);
+                    quantified = vec_wrap(tmp);
+                    break;
+                case 3:
+                    tmp = vec_truncate(byte_container);
+                    quantified = vec_sat(tmp);
+                    break;
+                case 4:
+                    tmp = vec_truncate(byte_container);
+                    quantified = vec_wrap(tmp);
+                    break;
+                default:
+                    std::cerr << "Error! No valid strategy provided!\n <Strategies:> " << 
+                        "1 -round+sat; 2 - round+wrap; 3 - trunc+sat; 4 - trunc + wrap\n";
+                    exit(-1);
+            }
+            ans[i][j] = quantified;
         }
     }
     return ans;

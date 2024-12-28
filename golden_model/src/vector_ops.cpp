@@ -141,7 +141,7 @@ vector<int> vec_minus(vector<int> &a, vector<int> &b, int length)
     int carry = 0;
     int val = b_comp[b_comp.size()-1] + 1 + carry;
     b_comp[b_comp.size()-1] = val & 1;
-    carry = val << 1;
+    carry = val >> 1;
     for(int i = (int)b_comp.size()-2; i >= 0; i--)
     {
         if (carry == 0)
@@ -150,7 +150,7 @@ vector<int> vec_minus(vector<int> &a, vector<int> &b, int length)
         {
             val = b_comp[i] + carry;
             b_comp[i] = val & 1;
-            carry = val << 1;
+            carry = val >> 1;
         }
     }
     vector<int> ans(length, 0);

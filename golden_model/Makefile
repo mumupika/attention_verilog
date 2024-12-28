@@ -54,6 +54,9 @@ $(OBJ)/verilog_input.o: $(SRC)/verilog_input.cpp
 	@mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+debug: $(OBJ)/test.o $(OBJ)/verilog_input.o $(OBJ)/data_generator.o $(OBJ)/quantify.o $(OBJ)/softmax.o $(OBJ)/matrix_multiply.o $(OBJ)/matrix_output.o $(OBJ)/fix_convert.o $(OBJ)/vector_ops.o 
+	clang++ $(CFLAGS) $^ -o main
+
 .PHONY: all clean dist-clean
 clean: 
 	rm -rf ./build

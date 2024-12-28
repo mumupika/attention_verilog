@@ -109,7 +109,7 @@ void input(vector<vector<double> > &a, string name = std::string(""), int length
  * @param length: 需要转换的长度。16/32/33/34/35/64bits。
  * @return: 没有返回值。
  */
-void output(vector<vector<double> > &a, string name = std::string(""), int length=16)
+void output(vector<vector<double> > &a, string name = std::string(""), int length=16, ostream &os = std::cout)
 {
     int count = 1;
     cout << name << "\n\n";
@@ -119,13 +119,13 @@ void output(vector<vector<double> > &a, string name = std::string(""), int lengt
         {
             vector<int> current_byte = float2byte(a[i][j], length);
             string number = vec2hex(current_byte);
-            cout << number << "  ";
+            os << number << "  ";
             if(count % 8 == 0)
-                cout << "\n";
+                os << "\n";
             count++;
         }
     }
-    cout << "\n";
+    os << "\n";
 }
 
 /**
@@ -135,7 +135,33 @@ void output(vector<vector<double> > &a, string name = std::string(""), int lengt
  * @param length: 需要转换的长度。16/32/33/34/35/64bits。
  * @return: 没有返回值。
  */
-void output_transpose(vector<vector<double> > &a, string name = std::string(""), int length=16)
+void output_pure(vector<vector<vector<int> > > &a, string name = std::string(""),ostream &os = std::cout)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t i = 0; i < a.size(); i++)
+    {
+        for(size_t j = 0; j < a[i].size(); j++)
+        {
+            vector<int> current_byte = a[i][j];
+            string number = vec2hex(current_byte);
+            os << number << "  ";
+            if(count % 8 == 0)
+                os << "\n";
+            count++;
+        }
+    }
+    os << "\n";
+}
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_transpose_4(vector<vector<double> > &a, string name = std::string(""), int length=16,ostream &os = std::cout)
 {
     int count = 1;
     cout << name << "\n\n";
@@ -145,13 +171,13 @@ void output_transpose(vector<vector<double> > &a, string name = std::string(""),
         {
             vector<int> current_byte = float2byte(a[i][j], length);
             string number = vec2hex(current_byte);
-            cout << number << "  ";
+            os << number << "  ";
             if(count % 4 == 0)
-                cout << "\n";
+                os << "\n";
             count++;
         }
     }
-    cout << "\n";
+    os << "\n";
 }
 
 /**
@@ -161,7 +187,33 @@ void output_transpose(vector<vector<double> > &a, string name = std::string(""),
  * @param length: 需要转换的长度。16/32/33/34/35/64bits。
  * @return: 没有返回值。
  */
-void output_4(vector<vector<double> > &a, string name = std::string(""), int length=16)
+void output_pure_transpose_4(vector<vector<vector<int> > > &a, string name = std::string(""),ostream &os = std::cout)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t j = 0; j < a[0].size(); j++)
+    {
+        for(size_t i = 0; i < a.size(); i++)
+        {
+            vector<int> current_byte = a[i][j];
+            string number = vec2hex(current_byte);
+            os << number << "  ";
+            if(count % 4 == 0)
+                os << "\n";
+            count++;
+        }
+    }
+    os << "\n";
+}
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_4(vector<vector<double> > &a, string name = std::string(""), int length=16,ostream &os = std::cout)
 {
     int count = 1;
     cout << name << "\n\n";
@@ -171,11 +223,89 @@ void output_4(vector<vector<double> > &a, string name = std::string(""), int len
         {
             vector<int> current_byte = float2byte(a[i][j], length);
             string number = vec2hex(current_byte);
-            cout << number << "  ";
+            os << number << "  ";
             if(count % 4 == 0)
-                cout << "\n";
+                os << "\n";
             count++;
         }
     }
-    cout << "\n";
+    os << "\n";
+}
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_pure_4(vector<vector<vector<int> > > &a, string name = std::string(""),ostream &os = std::cout)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t i = 0; i < a.size(); i++)
+    {
+        for(size_t j = 0; j < a[i].size(); j++)
+        {
+            vector<int> current_byte = a[i][j];
+            string number = vec2hex(current_byte);
+            os << number << "  ";
+            if(count % 4 == 0)
+                os << "\n";
+            count++;
+        }
+    }
+    os << "\n";
+}
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_transpose_8(vector<vector<double> > &a, string name = std::string(""), int length=16,ostream &os = std::cout)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t j = 0; j < a[0].size(); j++)
+    {
+        for(size_t i = 0; i < a.size(); i++)
+        {
+            vector<int> current_byte = float2byte(a[i][j], length);
+            string number = vec2hex(current_byte);
+            os << number << "  ";
+            if(count % 8 == 0)
+                os << "\n";
+            count++;
+        }
+    }
+    os << "\n";
+}
+
+/**
+ * @brief 根据生成的随机数组转换成16进制数并传入到文件中。
+ * @param a:需要转换的16进制数。
+ * @param name: 转换的矩阵名称。
+ * @param length: 需要转换的长度。16/32/33/34/35/64bits。
+ * @return: 没有返回值。
+ */
+void output_pure_transpose_8(vector<vector<vector<int> > > &a, string name = std::string(""),ostream &os = std::cout)
+{
+    int count = 1;
+    cout << name << "\n\n";
+    for(size_t j = 0; j < a[0].size(); j++)
+    {
+        for(size_t i = 0; i < a.size(); i++)
+        {
+            vector<int> current_byte = a[i][j];
+            string number = vec2hex(current_byte);
+            os << number << "  ";
+            if(count % 8 == 0)
+                os << "\n";
+            count++;
+        }
+    }
+    os << "\n";
 }

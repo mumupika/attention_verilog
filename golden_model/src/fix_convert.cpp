@@ -412,3 +412,31 @@ vector<vector<double> > matrix2fix(vector<vector<double> > &a, int length)
     }
     return ans;
 }
+
+/**
+ * @brief 将矩阵转换成固定的浮点数。
+ * @param a: (ref), 直接进行原地修改。
+ * @param length: byteContainer长度。
+ */
+vector<vector<vector<int> > > matrix2container(vector<vector<double> > &a, int length)
+{
+    vector<vector<vector<int> > > ans(a.size(), vector<vector<int> >(a[0].size()));
+    try
+    {
+        if(!a.size() || !a[0].size())
+            throw "Error! vector is empty.\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    for(size_t i = 0; i < a.size(); i++)
+    {
+        for (size_t j = 0; j < a[0].size(); j++)
+        {
+            ans[i][j] = float2byte(a[i][j], length);
+        }
+    }
+    return ans;
+}
