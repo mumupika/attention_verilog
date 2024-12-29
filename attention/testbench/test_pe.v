@@ -37,8 +37,8 @@ module test_pe();
 
 
     initial begin
-        $readmemh("./datas/activations.txt", mem1);
-        $readmemh("./datas/weights.txt", mem2);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\small_1.txt", mem1);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\small_2.txt", mem2);
         activations <= 16'b0;
         weights <= 16'b0;
         counter <= 3'b0;
@@ -60,7 +60,7 @@ module test_pe();
         if (rst_n == 1 && en == 1) begin
             counter <= counter + 1'b1;
             if (counter == 3'b111) begin
-                $finish;
+                $stop;
             end
             if (counter <= 3'b011) begin
                 activations <= mem1[counter];

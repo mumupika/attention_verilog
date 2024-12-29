@@ -42,7 +42,7 @@ module test_min ();
         if(done == 1) begin
             start <= 0;
             rst_n <= 0;
-            #5 $finish;
+            #5 $stop;
         end
         else begin
             prepare_input[15:0] <= mem[0];
