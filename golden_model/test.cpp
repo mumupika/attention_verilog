@@ -6,9 +6,30 @@
 #include "src/headers.hpp"
 
 using namespace std;
-int main()
+int main(int argc, char *argv[])
 {
     system("clear");
+    int query_seed = 1;
+    int key_seed = 2;
+    int value_seed = 3;
+    if(argc < 2)
+    {
+        cout << "Using default seed: query=1, key=2, value=3;\n\n";
+    }
+    else if(argc == 2)
+    {
+        cout << "Input with one seed. So using query=<input>, key=query+1, value=query+2;\n\n";
+        query_seed = atoi(argv[1]);
+        key_seed = query_seed + 1;
+        value_seed = key_seed + 1;
+    }
+    else if(argc == 4)
+    {
+        query_seed = atoi(argv[1]);
+        key_seed = atoi(argv[2]);
+        value_seed = atoi(argv[3]);
+        cout << "using seed: key: " << key_seed << " query: " << query_seed << " value: " << value_seed << "\n\n";
+    }
     ofstream key_file("../attention/datas/key.txt");
     ofstream query_file("../attention/datas/query.txt");
     ofstream value_file("../attention/datas/value.txt");
@@ -19,9 +40,9 @@ int main()
 
     // file << "*** Test matrix_multiply. ***\n";
     
-    vector<vector<double> > query = random_query(0, 2, 1);
-    vector<vector<double> > key = random_key(0, 2, 2);
-    vector<vector<double> > value = random_value(0, 2, 3);
+    vector<vector<double> > query = random_query(0, 2, query_seed);
+    vector<vector<double> > key = random_key(0, 2, key_seed);
+    vector<vector<double> > value = random_value(0, 2, value_seed);
     
     vector<vector<double> > query_fix = matrix2fix(query, 16);
     vector<vector<double> > key_fix = matrix2fix(key, 16);

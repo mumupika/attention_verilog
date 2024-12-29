@@ -19,7 +19,7 @@ module pe_8x8_top(
     reg [127:0]minimum_col_numbers[0:7];
     reg minimum_start[0:7];
     reg [15:0]quantified_ans[0:7][0:7];
-    reg [4:0]flags[0:7][0:7];    // 复用。表示每个阶段每个寄存器状态。
+    reg [2:0]flags[0:7][0:7];    // 复用。表示每个阶段每个寄存器状态。
     reg [35:0]softmax_res[0:7][0:7];
     reg [3:0]input_counter[0:7];    // 八路输入控制。
     reg attention_flag;
