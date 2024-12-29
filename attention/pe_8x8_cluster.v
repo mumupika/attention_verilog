@@ -22,7 +22,6 @@ module pe_8x8_cluster(
 
     // 定义内部寄存器。
     reg [35:0]store_orig_sums[0:7][0:7];
-    reg [15:0]store_output_sums[0:7][0:7];
 
     genvar i,j;
     // 输入线网链接。
@@ -117,10 +116,11 @@ module pe_8x8_cluster(
             for (row = 0; row < 8; row = row + 1) begin
                 for(col = 0; col < 8; col = col + 1) begin
                     store_orig_sums[row][col] <= 36'b0;
-                    store_output_sums[row][col] <= 16'b0;
                     output_dones <= 0;
                 end
             end
+            o_activations <= 0;
+            o_weights <= 0;
         end
         else if (en == 1 || rst_n == 1) begin
             for(row = 0; row < 8; row = row + 1) begin

@@ -27,8 +27,8 @@ module test_pe_8x8();
     end
 
     initial begin
-        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\activations.txt",mem1);
-        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\weights.txt",mem2);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\key.txt",mem1);
+        $readmemh("Y:\\Documents\\codes\\verilog\\attention_project\\attention\\datas\\query.txt",mem2);
     end
 
     pe_8x8_cluster cluster(
@@ -92,7 +92,7 @@ module test_pe_8x8();
         if (output_done[63] == 1) begin
             $fwrite(fd, "%X", results);
             $fclose(fd);
-            $finish;
+            $stop;
         end
         else if (en == 1 && rst_n == 1) begin
             // 进行计数和计算部分。直到读取完成所有的权重和激励。NUMS=4.
