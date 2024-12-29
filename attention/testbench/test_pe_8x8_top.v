@@ -1,4 +1,5 @@
 // `include "../pe_8x8_top.v"
+`timescale 1ns/1ps
 module test_top();
 
     reg clk,en,rst_n;

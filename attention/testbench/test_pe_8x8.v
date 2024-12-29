@@ -1,4 +1,5 @@
 `include "../pe_8x8_cluster.v"
+`timescale 1ns/1ps
 module test_pe_8x8();
     // 定义线网和寄存器。
     reg clk;

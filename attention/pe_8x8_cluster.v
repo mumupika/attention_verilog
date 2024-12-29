@@ -2,6 +2,7 @@
  * 8x8模块接线和集群。
 */
 // `include "pe.v"
+`timescale 1ns/1ps
 module pe_8x8_cluster(
     input wire [127:0] activations,
     input wire [127:0] weights,

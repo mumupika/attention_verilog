@@ -1,4 +1,5 @@
 `include "../min.v"
+`timescale 1ns/1ps
 module test_min ();
 
     // SRAM

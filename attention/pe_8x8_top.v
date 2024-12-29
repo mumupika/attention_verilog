@@ -1,5 +1,6 @@
 // `include "pe_8x8_cluster.v"
 // `include "min.v"
+`timescale 1ns/1ps
 module pe_8x8_top(
     input wire clk,
     input wire en,

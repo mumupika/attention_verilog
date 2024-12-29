@@ -1,4 +1,5 @@
 `include "../pe.v"
+`timescale 1ns/1ps
 module test_pe();
     // 输入模块
     reg clk;

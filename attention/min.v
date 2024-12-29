@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module FindMin(
     input wire [127:0]numbers,
     input wire clk,
