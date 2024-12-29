@@ -60,7 +60,7 @@ module test_top();
             // start checking.
             for(i=0;i<32;i=i+1) begin
                 if(ground_truth[i] != final_res[i*16 +: 16]) begin
-                    $display("Error! Ground truth = %X, your results = %X\n", ground_truth[i], final_res[i*16 +: 16]);
+                    $display("Error! Error at (%d), Ground truth = %X, your results = %X\n", i, ground_truth[i], final_res[i*16 +: 16]);
                     $stop;
                 end
                 else
