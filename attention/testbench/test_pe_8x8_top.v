@@ -1,4 +1,4 @@
-`include "../pe_8x8_top.v"
+// `include "../pe_8x8_top.v"
 module test_top();
 
     reg clk,en,rst_n;

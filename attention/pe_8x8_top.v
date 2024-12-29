@@ -1,5 +1,5 @@
-`include "pe_8x8_cluster.v"
-`include "min.v"
+// `include "pe_8x8_cluster.v"
+// `include "min.v"
 module pe_8x8_top(
     input wire clk,
     input wire en,
