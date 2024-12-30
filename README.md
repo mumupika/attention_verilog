@@ -16,3 +16,7 @@ make && ./main 1 2 3 # (query: 1, key: 2, value: 3)
 # make && ./main (default seed: 1 2 3)
 make clean
 ```
+
+## QuestaSim Simulation Display
+
+<img width="561" alt="Screenshot 2024-12-30 at 13 49 58" src="https://github.com/user-attachments/assets/805d0585-0493-41ce-9c55-ace81c2bdb6b" />
