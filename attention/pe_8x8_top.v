@@ -88,7 +88,7 @@ module pe_8x8_top(
     endgenerate
 
     integer row,col;
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk) begin
         if(en == 0 || rst_n == 0) begin
             key_attn <= 0;
             query_val <= 0;
@@ -111,11 +111,8 @@ module pe_8x8_top(
                 end
             end
         end
-    end
     
-
-    always @(posedge clk or negedge rst_n) begin
-        if (en == 1 && rst_n == 1) begin
+        else if (en == 1 && rst_n == 1) begin
             // 读入数据并开始计算。
             reset_cluster <= 1;
             
@@ -137,24 +134,24 @@ module pe_8x8_top(
                         query_val[row*16 +: 16] <= 0;
                     end
                 end
-            end
+            
             
     
-
-            // 处理每个单元的量化操作。flag处理完成为1.
-            for(row = 0; row < 8; row = row + 1) begin
-                for (col = 0; col < 8; col = col + 1) begin
-                    // 计算完成信号出现，进行量化操作。
-                    if(calc_done_signals[row][col] == 1 && flags[row][col] == 0) begin
-                        if (calc_done_results[row][col][23:7]+1'b1 == 0 || calc_done_results[row][col][35:24] > 0)
-                            quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
-                        else begin
-                            if(calc_done_results[row][col][7]==1)
-                                quantified_ans[row][col] <= calc_done_results[row][col][23:8] + 1'b1;
-                            else
-                                quantified_ans[row][col] <= calc_done_results[row][col][23:8];
+                // 处理每个单元的量化操作。flag处理完成为1.
+                for(row = 0; row < 8; row = row + 1) begin
+                    for (col = 0; col < 8; col = col + 1) begin
+                        // 计算完成信号出现，进行量化操作。
+                        if(calc_done_signals[row][col] == 1 && flags[row][col] == 0) begin
+                            if (calc_done_results[row][col][23:7]+1'b1 == 0 || calc_done_results[row][col][35:24] > 0)
+                                quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
+                            else begin
+                                if(calc_done_results[row][col][7]==1)
+                                    quantified_ans[row][col] <= calc_done_results[row][col][23:8] + 1'b1;
+                                else
+                                    quantified_ans[row][col] <= calc_done_results[row][col][23:8];
+                            end
+                            flags[row][col] <= flags[row][col] + 1;
                         end
-                        flags[row][col] <= flags[row][col] + 1;
                     end
                 end
             end
@@ -168,7 +165,7 @@ module pe_8x8_top(
                 input_done <= 0;
                 for (col = 0; col < 8; col = col + 1) 
                     input_counter[col] <= 0;
-            end
+            
                 
             // 对每一列所有元素进行softmax操作。flag处理完成为2.
             for (col = 0; col < 8; col = col + 1) begin
@@ -187,25 +184,26 @@ module pe_8x8_top(
                 end
             end
 
-            // 再次进行量化操作。flag处理完成为3.
-            for(row = 0; row < 8; row = row + 1) begin
-                for (col = 0; col < 8; col = col + 1) begin
-                    if(flags[row][col] == 2) begin
-                        if (softmax_res[row][col][23:7]+1'b1 == 0 || softmax_res[row][col][35:24] > 0)
-                            quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
-                        else begin
-                            if(softmax_res[row][col][7]==1)
-                                quantified_ans[row][col] <= softmax_res[row][col][23:8] + 1'b1;
-                            else
-                                quantified_ans[row][col] <= softmax_res[row][col][23:8];
+                // 再次进行量化操作。flag处理完成为3.
+                for(row = 0; row < 8; row = row + 1) begin
+                    for (col = 0; col < 8; col = col + 1) begin
+                        if(flags[row][col] == 2) begin
+                            if (softmax_res[row][col][23:7]+1'b1 == 0 || softmax_res[row][col][35:24] > 0)
+                                quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
+                            else begin
+                                if(softmax_res[row][col][7]==1)
+                                    quantified_ans[row][col] <= softmax_res[row][col][23:8] + 1'b1;
+                                else
+                                    quantified_ans[row][col] <= softmax_res[row][col][23:8];
+                            end
+                            flags[row][col] <= flags[row][col] + 1;
                         end
-                        flags[row][col] <= flags[row][col] + 1;
                     end
                 end
             end
 
             // 读入新的数据。
-            if (flags[7][7] == 3 && attention_flag <= 1) begin
+            if (flags[7][7] == 3 && attention_flag == 1) begin
                 if(input_counter[0] >= 0 && input_counter[0] <= 8)
                     input_counter[0] <= input_counter[0] + 1;
                 for(row = 0; row < 8; row = row + 1) begin
@@ -225,22 +223,23 @@ module pe_8x8_top(
                         query_val[row*16 +: 16] <= 0;
                     end
                 end
-            end
+            
 
-            // 处理每个单元的量化操作。flag处理完成为4.
-            for(row = 0; row < 8; row = row + 1) begin
-                for (col = 0; col < 4; col = col + 1) begin
-                    // 计算完成信号出现，进行量化操作。
-                    if(calc_done_signals[row][col] == 1 && flags[row][col] == 3) begin
-                        if (calc_done_results[row][col][23:7]+1'b1 == 0 || calc_done_results[row][col][35:24] > 0)
-                            quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
-                        else begin
-                            if(calc_done_results[row][col][7]==1)
-                                quantified_ans[row][col] <= calc_done_results[row][col][23:8] + 1'b1;
-                            else
-                                quantified_ans[row][col] <= calc_done_results[row][col][23:8];
+                // 处理每个单元的量化操作。flag处理完成为4.
+                for(row = 0; row < 8; row = row + 1) begin
+                    for (col = 0; col < 4; col = col + 1) begin
+                        // 计算完成信号出现，进行量化操作。
+                        if(calc_done_signals[row][col] == 1 && flags[row][col] == 3) begin
+                            if (calc_done_results[row][col][23:7]+1'b1 == 0 || calc_done_results[row][col][35:24] > 0)
+                                quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
+                            else begin
+                                if(calc_done_results[row][col][7]==1)
+                                    quantified_ans[row][col] <= calc_done_results[row][col][23:8] + 1'b1;
+                                else
+                                    quantified_ans[row][col] <= calc_done_results[row][col][23:8];
+                            end
+                            flags[row][col] <= flags[row][col] + 1;
                         end
-                        flags[row][col] <= flags[row][col] + 1;
                     end
                 end
             end
