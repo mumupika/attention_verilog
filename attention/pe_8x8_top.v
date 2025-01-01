@@ -21,6 +21,7 @@ module pe_8x8_top(
     reg minimum_start[0:7];
     reg [15:0]quantified_ans[0:7][0:7];
     reg [2:0]flags[0:7][0:7];    // 复用。表示每个阶段每个寄存器状态。
+    reg [35:0]mid_res[0:7][0:7];
     reg [35:0]softmax_res[0:7][0:7];
     reg [3:0]input_counter[0:7];    // 八路输入控制。
     reg attention_flag;
@@ -108,6 +109,7 @@ module pe_8x8_top(
                     quantified_ans[row][col] <= 0;
                     flags[row][col] <= 0;
                     softmax_res[row][col] <= 0;
+                    mid_res[row][col] <= 0;
                 end
             end
         end
@@ -157,7 +159,7 @@ module pe_8x8_top(
             end
 
             // 归零所有pe单元。输入数据。
-            if(flags[7][7] >= 1 && flags[7][7] < 3) begin
+            if(flags[7][7] >= 1 && flags[7][7] < 4) begin
                 reset_cluster <= 0;
                 attention_flag <= 1;
                 key_attn <= 0;
@@ -167,7 +169,7 @@ module pe_8x8_top(
                     input_counter[col] <= 0;
             
                 
-            // 对每一列所有元素进行softmax操作。flag处理完成为2.
+            // 对每一列所有元素进行softmax操作。flag处理完成为3.
             for (col = 0; col < 8; col = col + 1) begin
                 if(flags[7][col] == 1) begin
                     minimum_start[col] <= 1;
@@ -177,9 +179,11 @@ module pe_8x8_top(
                 end
                 if(minimum_done[col] == 1) begin
                     for(row = 0; row < 8; row = row + 1) begin
-                        softmax_res[row][col] <= (quantified_ans[row][col] - minimum_results[col]) * (quantified_ans[row][col] - minimum_results[col]);
+                        mid_res[row][col] <= quantified_ans[row][col] - minimum_results[col];
+                        softmax_res[row][col] <= mid_res[row][col] * mid_res[row][col];
                         flags[row][col] <= flags[row][col] + 1;
-                        minimum_start[col] <= 0;
+                        if(flags[row][col] == 3)
+                            minimum_start[col] <= 0;
                     end
                 end
             end
@@ -187,7 +191,7 @@ module pe_8x8_top(
                 // 再次进行量化操作。flag处理完成为3.
                 for(row = 0; row < 8; row = row + 1) begin
                     for (col = 0; col < 8; col = col + 1) begin
-                        if(flags[row][col] == 2) begin
+                        if(flags[row][col] == 3) begin
                             if (softmax_res[row][col][23:7]+1'b1 == 0 || softmax_res[row][col][35:24] > 0)
                                 quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
                             else begin
@@ -203,7 +207,7 @@ module pe_8x8_top(
             end
 
             // 读入新的数据。
-            if (flags[7][7] == 3 && attention_flag == 1) begin
+            if (flags[7][7] == 4 && attention_flag == 1) begin
                 if(input_counter[0] >= 0 && input_counter[0] <= 8)
                     input_counter[0] <= input_counter[0] + 1;
                 for(row = 0; row < 8; row = row + 1) begin
@@ -229,7 +233,7 @@ module pe_8x8_top(
                 for(row = 0; row < 8; row = row + 1) begin
                     for (col = 0; col < 4; col = col + 1) begin
                         // 计算完成信号出现，进行量化操作。
-                        if(calc_done_signals[row][col] == 1 && flags[row][col] == 3) begin
+                        if(calc_done_signals[row][col] == 1 && flags[row][col] == 4) begin
                             if (calc_done_results[row][col][23:7]+1'b1 == 0 || calc_done_results[row][col][35:24] > 0)
                                 quantified_ans[row][col] <= 16'b1111_1111_1111_1111;
                             else begin
@@ -243,7 +247,7 @@ module pe_8x8_top(
                     end
                 end
             end
-            if(flags[7][3] == 4) begin
+            if(flags[7][3] == 5) begin
                 for(row = 0; row < 8; row = row + 1) begin
                     for(col = 0; col < 4; col = col + 1) begin
                         final_res[(4*row + col)*16 +: 16] <= quantified_ans[row][col];
@@ -252,7 +256,7 @@ module pe_8x8_top(
                 end
             end
 
-            if(flags[7][3] == 5)
+            if(flags[7][3] == 6)
                 all_done <= 1;
         end
     end
