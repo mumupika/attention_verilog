@@ -1,0 +1,184 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/questasim64_10.6c/examples
+T_opt
+!s110 1735471996
+VCZ0CW7SJ^?h3IOmL2`lb30
+04 8 4 work test_top fast 0
+=1-001c4207eb0e-6771337b-395-2804
+o-quiet -auto_acc_if_foreign -work work
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.6c;65
+R0
+vFindMin
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 U@JcBTbl6C0E7HBgHDQN:1
+If5k[X>:E8SmoP<?:Ud;eE3
+Z3 d//psf/Home/Desktop/simulate
+w1735478745
+8Y:\Documents\codes\verilog\attention_project\attention\testbench\..\min.v
+FY:\Documents\codes\verilog\attention_project\attention\testbench\..\min.v
+L0 2
+Z4 OL;L;10.6c;65
+Z5 !s108 1735717898.000000
+Z6 !s107 Y:\Documents\codes\verilog\attention_project\attention\testbench\..\min.v|Y:/Documents/codes/verilog/attention_project/attention/testbench/min_tb.v|
+Z7 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|Y:/Documents/codes/verilog/attention_project/attention/testbench/min_tb.v|
+!i113 0
+Z8 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+n@find@min
+vpe
+R2
+r1
+!s85 0
+31
+!i10b 1
+!s100 l<O^UAh]`I3j1LW19kIoF3
+IBJl2RzNfCEKE2<7f>DkBC2
+R3
+w1735107537
+8Y:\Documents\codes\verilog\attention_project\attention\testbench\..\pe.v
+FY:\Documents\codes\verilog\attention_project\attention\testbench\..\pe.v
+L0 1
+R4
+Z9 !s108 1735717897.000000
+Z10 !s107 Y:\Documents\codes\verilog\attention_project\attention\testbench\..\pe.v|Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe.v|
+Z11 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe.v|
+!i113 0
+R8
+R1
+vpe_8x8_cluster
+R2
+r1
+!s85 0
+31
+!i10b 1
+!s100 TRH_AV6>6zW1dWa:08]eB3
+Ia4`hW;8AQVGTaaEdlhRDE1
+R3
+Z12 w1735478744
+8Y:\Documents\codes\verilog\attention_project\attention\testbench\..\pe_8x8_cluster.v
+FY:\Documents\codes\verilog\attention_project\attention\testbench\..\pe_8x8_cluster.v
+L0 6
+R4
+R5
+Z13 !s107 Y:\Documents\codes\verilog\attention_project\attention\testbench\..\pe_8x8_cluster.v|Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8.v|
+Z14 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8.v|
+!i113 0
+R8
+R1
+vpe_8x8_top
+R2
+r1
+!s85 0
+31
+!i10b 1
+!s100 UK1>TA>lS7i=ClX;VgZS00
+Ik]V]@8OY:lBBW>zn>SN<:2
+R3
+w1735717874
+8Y:/Documents/codes/verilog/attention_project/attention/pe_8x8_top.v
+FY:/Documents/codes/verilog/attention_project/attention/pe_8x8_top.v
+L0 4
+R4
+R5
+!s107 Y:/Documents/codes/verilog/attention_project/attention/pe_8x8_top.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|Y:/Documents/codes/verilog/attention_project/attention/pe_8x8_top.v|
+!i113 0
+R8
+R1
+vtest_min
+Z15 !s110 1735717898
+!i10b 1
+!s100 W@bn6aJI>k_g6?4P[Q_9N1
+I<eZje2a?2YcCH7TjC:^CU2
+R2
+R3
+w1735478741
+8Y:/Documents/codes/verilog/attention_project/attention/testbench/min_tb.v
+FY:/Documents/codes/verilog/attention_project/attention/testbench/min_tb.v
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+R6
+R7
+!i113 0
+R8
+R1
+vtest_pe
+!s110 1735717897
+!i10b 1
+!s100 N4`OkUA_?SHl22kBSDi`l1
+IdiX9Oi0NaM26H>SNjT<Vk0
+R2
+R3
+Z16 w1735478746
+8Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe.v
+FY:/Documents/codes/verilog/attention_project/attention/testbench/test_pe.v
+L0 3
+R4
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R8
+R1
+vtest_pe_8x8
+R15
+!i10b 1
+!s100 zMgN[JP9Mh3Tz>Uef7NBo2
+IHo=8<d7XgRZ@1k=UMR4jZ3
+R2
+R3
+R16
+8Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8.v
+FY:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8.v
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+R13
+R14
+!i113 0
+R8
+R1
+vtest_top
+R2
+r1
+!s85 0
+31
+!i10b 1
+!s100 `ZVe^<>eV2I?nTb`M1>e32
+IMkb1Yd=93^dLE5B?fYYJF1
+R3
+R12
+8Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v
+FY:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v
+L0 3
+R4
+R5
+!s107 Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v|
+!i113 0
+R8
+R1

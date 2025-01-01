@@ -1,0 +1,53 @@
+Y:/Documents/codes/verilog/attention_project/attention/pe_8x8_cluster.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/pe_8x8_cluster.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module pe_8x8_cluster
+
+Top level modules:
+	pe_8x8_cluster
+
+} {} {}} Y:/Documents/codes/verilog/attention_project/attention/pe.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/pe.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module pe
+
+Top level modules:
+	pe
+
+} {} {}} Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module pe_8x8_cluster
+-- Compiling module test_pe_8x8
+
+Top level modules:
+	test_pe_8x8
+
+} {} {}} Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module pe
+-- Compiling module test_pe
+
+Top level modules:
+	test_pe
+
+} {} {}} Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module test_top
+
+Top level modules:
+	test_top
+
+} {} {}} Y:/Documents/codes/verilog/attention_project/attention/testbench/min_tb.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/testbench/min_tb.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module FindMin
+-- Compiling module test_min
+
+Top level modules:
+	test_min
+
+} {} {}} Y:/Documents/codes/verilog/attention_project/attention/min.v {1 {vlog -work work -vopt -stats=none Y:/Documents/codes/verilog/attention_project/attention/min.v
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+-- Compiling module FindMin
+
+Top level modules:
+	FindMin
+
+} {} {}}

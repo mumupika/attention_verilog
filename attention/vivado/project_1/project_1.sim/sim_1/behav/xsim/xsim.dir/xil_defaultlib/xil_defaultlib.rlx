@@ -1,0 +1,10 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+//psf/Home/Desktop/project_1/project_1.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
+//psf/Home/Desktop/project_1/project_1.srcs/sources_1/imports/attention/min.v,1735702398,verilog,,//psf/Home/Desktop/project_1/project_1.srcs/sources_1/imports/attention/pe.v,,FindMin,,,,,,,,
+//psf/Home/Desktop/project_1/project_1.srcs/sources_1/imports/attention/pe.v,1735107537,verilog,,//psf/Home/Desktop/project_1/project_1.srcs/sources_1/imports/attention/pe_8x8_cluster.v,,pe,,,,,,,,
+//psf/Home/Desktop/project_1/project_1.srcs/sources_1/imports/attention/pe_8x8_cluster.v,1735478744,verilog,,//psf/Home/Documents/codes/verilog/attention_project/attention/pe_8x8_top.v,,pe_8x8_cluster,,,,,,,,
+//psf/Home/Documents/codes/verilog/attention_project/attention/pe_8x8_top.v,1735701700,verilog,,//psf/Home/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v,,pe_8x8_top,,,,,,,,
+//psf/Home/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v,1735392866,verilog,,,,test_top,,,,,,,,

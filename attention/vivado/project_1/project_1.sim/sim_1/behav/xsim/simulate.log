@@ -1,0 +1,5 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+All clear! Well done!
+
+$stop called at time : 605 ns : File "//psf/Home/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v" Line 77

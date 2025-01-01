@@ -1,0 +1,7 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"test_top_time_impl.v" \
+"../../../../../../../Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v" \
+
+# Do not sort compile order
+nosort

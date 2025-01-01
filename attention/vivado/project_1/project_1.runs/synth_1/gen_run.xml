@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="synth_1" LaunchPart="xc7vx485tffg1157-1" LaunchTime="1735722329">
+  <File Type="PA-TCL" Name="pe_8x8_top.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="pe_8x8_top_drc_synth.rpt"/>
+  <File Type="REPORTS-TCL" Name="pe_8x8_top_reports.tcl"/>
+  <File Type="RDS-RDS" Name="pe_8x8_top.vds"/>
+  <File Type="RDS-UTIL" Name="pe_8x8_top_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="pe_8x8_top_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="pe_8x8_top.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="pe_8x8_top_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="pe_8x8_top_timing_summary_synth.pb"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/attention/min.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../Documents/codes/verilog/attention_project/attention/min.v"/>
+        <Attr Name="ImportTime" Val="1735478745"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/attention/pe.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../Documents/codes/verilog/attention_project/attention/pe.v"/>
+        <Attr Name="ImportTime" Val="1735107537"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/attention/pe_8x8_cluster.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../Documents/codes/verilog/attention_project/attention/pe_8x8_cluster.v"/>
+        <Attr Name="ImportTime" Val="1735478744"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../Documents/codes/verilog/attention_project/attention/pe_8x8_top.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="pe_8x8_top"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/new/clock.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/new/clock.xdc"/>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019">
+      <Desc>Vivado Synthesis Defaults</Desc>
+    </StratHandle>
+    <Step Id="synth_design">
+      <Option Id="FlattenHierarchy">1</Option>
+      <Option Id="ReTiming">1</Option>
+      <Option Id="GatedClockConversion">1</Option>
+    </Step>
+  </Strategy>
+</GenRun>

@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../../Documents/codes/verilog/attention_project/attention/min.v" \
+"../../../../../../Documents/codes/verilog/attention_project/attention/pe.v" \
+"../../../../../../Documents/codes/verilog/attention_project/attention/pe_8x8_cluster.v" \
+"../../../../../../Documents/codes/verilog/attention_project/attention/pe_8x8_top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

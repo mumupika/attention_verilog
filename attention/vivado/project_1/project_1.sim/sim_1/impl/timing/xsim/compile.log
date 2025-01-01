@@ -1,0 +1,5 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "//psf/Home/Desktop/project_1/project_1.sim/sim_1/impl/timing/xsim/test_top_time_impl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pe_8x8_top
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "//psf/Home/Documents/codes/verilog/attention_project/attention/testbench/test_pe_8x8_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module test_top

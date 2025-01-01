@@ -1,0 +1,17 @@
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 51bd913b262a4939bfda081250d4b4c6 --incr --debug typical --relax --mt 2 --maxdelay -L xil_defaultlib -L simprims_ver -L secureip --snapshot test_top_time_impl -transport_int_delays -pulse_r 0 -pulse_int_r 0 -pulse_e 0 -pulse_int_e 0 xil_defaultlib.test_top xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+INFO: [XSIM 43-3451] SDF backannotation process started with SDF file "test_top_time_impl.sdf", for root module "test_top/control".
+INFO: [XSIM 43-3452] SDF backannotation was successful for SDF file "test_top_time_impl.sdf", for root module "test_top/control".
+Time Resolution for simulation is 1ps
+Compiling module simprims_ver.OBUF
+Compiling module xil_defaultlib.pe_8x8_top
+Compiling module xil_defaultlib.test_top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot test_top_time_impl
